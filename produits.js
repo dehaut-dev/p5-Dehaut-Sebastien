@@ -17,7 +17,7 @@ fetch(api)
                 <img class="col-md-auto center-block" src="${teddy.imageUrl}"></img>
                 <div>${teddy.price} €</div>
                 <p>${teddy.description}</p>
-                <a type="button" class="btn btn-danger my-2" href="produits.html?${teddy._id}">ajouter</a>
+                <a type="button" class="btn btn-danger my-2" href="produits.html?${teddy._id}">ajouter au panier</a>
             </div>`
         titleSecondary.innerHTML += `${teddy.name}`
 
