@@ -12,15 +12,19 @@ fetch(api)
         const container = document.getElementById("products");
         const titleSecondary = document.getElementById("title-secondary");
         container.innerHTML += `
-            <div class="col-md-12 mr-auto text-center mt-5">
+            <div class="col-md-12 mr-auto text-center mt-2">
                 <h1 class="text-center">${teddy.name}</h1>
                 <img class="col-md-auto center-block" src="${teddy.imageUrl}"></img>
-                <div>${teddy.price} €</div>
-                <p>${teddy.description}</p>
-                <a type="button" class="btn btn-danger my-2" href="produits.html?${teddy._id}">ajouter au panier</a>
+                <p class="font-weight-bold h3">${teddy.price} €</p>
+                <p class="h6">${teddy.description}</p>
+                <a id="add-article" type="button" class="btn btn-danger my-2" href="produits.html?${teddy._id}">ajouter au panier</a>
             </div>`
         titleSecondary.innerHTML += `${teddy.name}`
 
+        const addArticle = document.getElementById("add-article");
+        addArticle.addEventListener('click', event => {
+            localStorage.setItem(teddy.name, teddy.price);
+        })
         
     })
 
