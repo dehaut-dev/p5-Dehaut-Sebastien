@@ -1,8 +1,6 @@
 const urlRecupId = window.location.search;
 const urlRecup = urlRecupId.substr(1);
 const api = "http://localhost:3000/api/teddies/" + urlRecup;
-console.log(api);
-
 
 fetch(api)
     .then(response => response.json())
@@ -21,38 +19,44 @@ fetch(api)
                 <a id="sup-article" type="button" class="btn btn-danger my-2" href="produits.html?${teddy._id}">vider panier</a>
             </div>`
         titleSecondary.innerHTML += `${teddy.name}`                                           // fin de la mise en page HTML dynamique
+        
+        let oursTab = [];
 
+    var oursId = {
+        name : teddy.name,
+        price : teddy.price,
+        img : teddy.imageUrl,
+        quantity : 1
+    };
 
-        let oursObject = {oursId : Id };
-        let oursSelection = [];
-            
+    newDifferentProduct = true;    
 
+    console.log(oursId.quantity);
+    function add (){
+
+        if (localStorage.getItem("ours") === null) {
+            oursTab.push(oursId);
+            localStorage.setItem("ours", JSON.stringify(oursTab)); 
+        } else {
+            oursTab = JSON.parse(localStorage.getItem('ours'))
+            oursTab.forEach((newOursTab) => {
+              if (teddy.name === newOursTab.name) {
+                newOursTab.quantity++;
+                newDifferentProduct = false;
+              }
+            })
+            if (newDifferentProduct) oursTab.push(oursId);
+            localStorage.setItem('ours', JSON.stringify(oursTab))   
+        }}
         
 
-
-        // // console.log(oursObject);
-        // var monOurs_json = JSON.stringify(oursObject);
-        // console.log(monOurs_json);
-
-        // const addArticle = document.getElementById("add-article");              
-        // addArticle.addEventListener('click', event => {
-        //     oursObject.push(teddy._id);
-        //     localStorage.setItem("ours", JSON.parse(monOurs_json));            
-        // })
-        // const supArticle = document.getElementById("sup-article");
-        // supArticle.addEventListener('click', event => {
-        //     localStorage.clear();
-        // })
-
-        // var monOursRetour_json = localStorage.getItem("ours");
-        // var oursObject = JSON.parse(monOursRetour_json);
-        // // Affichage dans la console
-        // console.log(oursObject);
+        const addArticle = document.getElementById("add-article");
+        addArticle.addEventListener('click', event => {
+            add();
+        })
+        
+        const supArticle = document.getElementById("sup-article");
+        supArticle.addEventListener('click', event => {
+            localStorage.clear();
+        })
     })
-
-
-
-// const urlRecup = window.location.search;
-// const urlUtils = urlRecup.substr(1)
-// console.log(urlRecup);
-// console.log(urlUtils)
