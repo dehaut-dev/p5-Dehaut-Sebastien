@@ -17,4 +17,5 @@ fetch(api)
         }
         let p = teddies.length;
         console.log(p);
+  
     })

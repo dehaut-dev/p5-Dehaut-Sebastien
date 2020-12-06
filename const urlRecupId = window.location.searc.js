@@ -173,4 +173,47 @@
             localStorage.setItem('ours', JSON.stringify(oursTab))   
         }}
 
+        // version qui marche :)
+
+        let oursTab = [];
+
+        var oursId = {
+            name: teddy.name,
+            price: teddy.price,
+            img: teddy.imageUrl,
+            quantity: 1
+        };
+
+        newOursId = true;
+
+        function add() {
+
+            if (localStorage.getItem("ours") === null) {
+                oursTab.push(oursId);
+                localStorage.setItem("ours", JSON.stringify(oursTab));
+            } else {
+                oursTab = JSON.parse(localStorage.getItem('ours'))
+                oursTab.forEach((newOursTab) => {
+                    if (teddy.name === newOursTab.name) {
+                        newOursTab.quantity++;
+                        newOursId = false;
+                    }
+                })
+                if (newOursId) oursTab.push(oursId);
+                localStorage.setItem('ours', JSON.stringify(oursTab))
+            }
+        }
+
+        // panier inutile 
+
+        function panier (){
+            if (localStorage.getItem("ours") === null) {
+                const vide = document.getElementById("panier");
+                vide.innerHTML += `<a class="nav-link" href="panier-vide.html" id="lien-panier">Panier</a>`
+            } else {
+                const plein = document.getElementById("panier");
+                plein.innerHTML += `<a class="nav-link" href="panier.html" id="lien-panier">Panier</a>`
+            }
+          }
+          panier ();
 

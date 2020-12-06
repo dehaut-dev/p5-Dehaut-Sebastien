@@ -22,33 +22,32 @@ fetch(api)
 
         let oursTab = [];
 
-    var oursId = {
-        name : teddy.name,
-        price : teddy.price,
-        img : teddy.imageUrl,
-        quantity : 1,
-        newOurs : true
-    };
+        var oursId = {
+            name: teddy.name,
+            price: teddy.price,
+            img: teddy.imageUrl,
+            quantity: 1
+        };
 
-        
+        newOursId = true;
 
-    
-    function add (){
+        function add() {
 
-        if (localStorage.getItem("ours") === null) {
-            oursTab.push(oursId);
-            localStorage.setItem("ours", JSON.stringify(oursTab)); 
-        } else {
-            oursTab = JSON.parse(localStorage.getItem('ours'))
-            oursTab.forEach((newOursTab) => {
-              if (teddy.name === newOursTab.name) {
-                newOursTab.quantity++;
-                newOurs = false;
-              }
-            })
-            if (newOurs) oursTab.push(oursId);
-            localStorage.setItem('ours', JSON.stringify(oursTab))   
-        }}
+            if (localStorage.getItem("ours") === null) {
+                oursTab.push(oursId);
+                localStorage.setItem("ours", JSON.stringify(oursTab));
+            } else {
+                oursTab = JSON.parse(localStorage.getItem('ours'))
+                oursTab.forEach((newOursTab) => {
+                    if (teddy.name === newOursTab.name) {
+                        newOursTab.quantity++;
+                        newOursId = false;
+                    }
+                })
+                if (newOursId) oursTab.push(oursId);
+                localStorage.setItem('ours', JSON.stringify(oursTab))
+            }
+        }
 
 
         const addArticle = document.getElementById("add-article");
@@ -60,5 +59,4 @@ fetch(api)
         supArticle.addEventListener('click', event => {
             localStorage.clear();
         })
-        console.log(localStorage.getItem('ours'));
     })

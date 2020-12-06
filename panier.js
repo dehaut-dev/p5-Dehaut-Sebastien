@@ -19,6 +19,17 @@ fetch(api)
 
         panierOurs();
 
+        function panier (){
+            if (localStorage.getItem("ours") === null) {
+                const vide = document.getElementById("panier");
+                vide.innerHTML += `<a class="nav-link" href="panier-vide.html" id="lien-panier">Panier</a>`
+            } else {
+                const plein = document.getElementById("panier");
+                plein.innerHTML += `<a class="nav-link" href="panier.html" id="lien-panier">Panier</a>`
+            }
+          }
+          panier ();
+
         // function commander (){
         //     return new Promise (function(resolve, reject){
         //         var addOurs = panierOurs()
