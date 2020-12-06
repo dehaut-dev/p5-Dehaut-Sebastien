@@ -13,15 +13,6 @@
         oursTab.push(oursId); 
         localStorage.setItem("ours", JSON.stringify(oursTab));  
     }
-    const addArticle = document.getElementById("add-article");
-    addArticle.addEventListener('click', event => {
-        add();    
-    })
-        
-    const supArticle = document.getElementById("sup-article");
-    supArticle.addEventListener('click', event => {
-        localStorage.clear();
-    })
     
     // version 2
         
@@ -34,7 +25,6 @@
         quantity : 1
     };
 
-    console.log(oursId.quantity);
     function add (){
 
         if (localStorage.getItem("ours") === null) {
@@ -46,16 +36,6 @@
             localStorage.setItem("ours", JSON.stringify(oursTab)); 
         }   
     }
-
-    const addArticle = document.getElementById("add-article");
-    addArticle.addEventListener('click', event => {
-        add();
-    })
-        
-    const supArticle = document.getElementById("sup-article");
-    supArticle.addEventListener('click', event => {
-        localStorage.clear();
-    })
     
     //version 3 
 
@@ -68,7 +48,6 @@
         quantity : 1
     }; 
 
-    console.log(oursId.quantity);
     function add (){
 
         if (localStorage.getItem("ours") === null) {
@@ -82,16 +61,6 @@
             oursTab.push(oursId);
             localStorage.setItem('ours', JSON.stringify(oursTab))   
     }}
-
-    const addArticle = document.getElementById("add-article");
-    addArticle.addEventListener('click', event => {
-        add();
-    })
-        
-    const supArticle = document.getElementById("sup-article");
-    supArticle.addEventListener('click', event => {
-        localStorage.clear();
-    })
 
     // version 4
 
@@ -104,7 +73,6 @@
         quantity : 1
     }; 
 
-    console.log(oursId.quantity);
     function add (){
 
         if (localStorage.getItem("ours") === null) {
@@ -120,18 +88,36 @@
             oursTab.push(oursId);
             localStorage.setItem('ours', JSON.stringify(oursTab))   
     }}
-    
-    const addArticle = document.getElementById("add-article");
-    addArticle.addEventListener('click', event => {
-        add();
-    })
-    
-    const supArticle = document.getElementById("sup-article");
-    supArticle.addEventListener('click', event => {
-        localStorage.clear();
-    })
 
     //version 5
+
+    let oursTab = [];
+
+    var oursId = {
+        name: teddy.name,
+        price: teddy.price,
+        img: teddy.imageUrl,
+        quantity: 1,
+        newOurs : true
+    };
+
+    function add (){
+
+        if (localStorage.getItem("ours") === null) {
+            oursTab.push(oursId);
+            localStorage.setItem("ours", JSON.stringify(oursTab)); 
+        } else {
+            oursTab = JSON.parse(localStorage.getItem('ours'))
+            for (newOursTab of oursTab){
+                newOursTab.quantity++;
+                newOursTab = false ;
+            }
+            oursTab.push(newOursTab);
+            localStorage.setItem('ours', JSON.stringify(oursTab))   
+    }}
+
+
+    //version 6
 
     let oursTab = [];
 
@@ -141,8 +127,7 @@
         img : teddy.imageUrl,
         quantity : 1
     };   
-
-    console.log(oursId.quantity);
+    
     function add (){
 
         if (localStorage.getItem("ours") === null) {
@@ -151,39 +136,26 @@
         } else {
             oursTab = JSON.parse(localStorage.getItem('ours'))
             oursTab.forEach((newOursTab) => {
-              if (teddy.name === newOursTab.name) {
+              if (oursTab.name === newOursTab.name) {
                 newOursTab.quantity++;
               }
             })
             oursTab.push(oursId);
             localStorage.setItem('ours', JSON.stringify(oursTab))   
     }}
-        
-    const addArticle = document.getElementById("add-article");
-    addArticle.addEventListener('click', event => {
-        add();
-    })
-        
-    const supArticle = document.getElementById("sup-article");
-    supArticle.addEventListener('click', event => {
-        localStorage.clear();
-    })
-
 
  // vesion 6
  
-    let oursTab = [];
+ let oursTab = [];
 
-    var oursId = {
-        name : teddy.name,
-        price : teddy.price,
-        img : teddy.imageUrl,
-        quantity : 1
-    };
+ var oursId = {
+     name: teddy.name,
+     price: teddy.price,
+     img: teddy.imageUrl,
+     quantity: 1,
+     newOurs : true
+ };
 
-    newDifferentProduct = true;    
-
-    console.log(oursId.quantity);
     function add (){
 
         if (localStorage.getItem("ours") === null) {
@@ -194,22 +166,11 @@
             oursTab.forEach((newOursTab) => {
               if (teddy.name === newOursTab.name) {
                 newOursTab.quantity++;
-                newDifferentProduct = false;
+                newOurs = false;
               }
             })
-            if (newDifferentProduct) oursTab.push(oursId);
+            if (newOurs) oursTab.push(oursId);
             localStorage.setItem('ours', JSON.stringify(oursTab))   
         }}
-        
-
-        const addArticle = document.getElementById("add-article");
-        addArticle.addEventListener('click', event => {
-            add();
-        })
-        
-        const supArticle = document.getElementById("sup-article");
-        supArticle.addEventListener('click', event => {
-            localStorage.clear();
-        })
 
 
