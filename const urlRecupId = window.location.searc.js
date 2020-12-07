@@ -217,3 +217,20 @@
           }
           panier ();
 
+
+          // finction click valable 
+
+          let click = {quantity: 1}
+
+        function onClick (){
+            if (localStorage.getItem("click") === null) {
+                localStorage.setItem("click", JSON.stringify(click));
+            } else {
+                click = JSON.parse(localStorage.getItem('click'))
+                for (newClick in click){
+                click.quantity++;
+            }
+                localStorage.setItem("click", JSON.stringify(click));
+            }
+        }
+

@@ -4,6 +4,7 @@ fetch(api)
     .then(response => response.json())
     .then(teddies => {
         const container = document.getElementById("products");
+
         for (const teddy of teddies) {
 
             container.innerHTML += `

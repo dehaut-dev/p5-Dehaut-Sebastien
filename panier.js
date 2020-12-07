@@ -1,75 +1,50 @@
-const urlRecupId = window.location.search;
-const urlRecup = urlRecupId.substr(1);
-const api = "http://localhost:3000/api/teddies/" + urlRecup;
+const api = "http://localhost:3000/api/teddies/";
 console.log(api);
 
 
 fetch(api)
     .then(response => response.json())
     
-    .then(teddy => {
+    .then(teddies => {
 
-        function panierOurs (){
-            var monOurs_json = localStorage.getItem("ours");                                    //
-            var oursObject = JSON.parse(monOurs_json);
-            // Affichage dans la console
-            console.log(monOurs_json);
-            console.log(oursObject);
+        let retour = JSON.parse(localStorage.getItem('ours'));
+        const fact = document.getElementById("table");
+
+        var prixTotal = [];
+
+        for (let i = 0; i < retour.length; i++) {
+
+            let p = retour[i];
+
+            fact.innerHTML += `
+            <tbody>
+                <tr>
+                    <td class="border" scope="col"><img width="80" src='${p["img"]}'></img></td>
+                    <td class="border" scope="row">${p["name"]}</td>
+                    <td class="border">${p["price"]} €</td>
+                    <td class="border">${p["quantity"]}</td>
+                    <td class""prix>${(p["price"])*(p["quantity"])} €</td>
+                </tr>
+            </tbody>
+            `    
+            prixGlobal = (p["price"])*(p["quantity"]);
+
+            prixTotal.push(prixGlobal);
         }
 
-        panierOurs();
+        const reducer = (accumulator, currentValue) => accumulator + currentValue;
+            
+        let prixFinal = prixTotal.reduce(reducer);
 
-        function panier (){
-            if (localStorage.getItem("ours") === null) {
-                const vide = document.getElementById("panier");
-                vide.innerHTML += `<a class="nav-link" href="panier-vide.html" id="lien-panier">Panier</a>`
-            } else {
-                const plein = document.getElementById("panier");
-                plein.innerHTML += `<a class="nav-link" href="panier.html" id="lien-panier">Panier</a>`
-            }
-          }
-          panier ();
-
-        // function commander (){
-        //     return new Promise (function(resolve, reject){
-        //         var addOurs = panierOurs()
-        //         addOurs.ready = function (err , addOurs){
-        //             if (err) {
-        //                 return reject(Error("erreur panier vide"))
-        //             }
-        //             return resolve(addOurs)
-        //         }
-        //     })
-        // };
-
-        // panierOurs();
-        // console.log(panierOurs);
-        // console.log(commander);
-        
-        
-        // var monOurs_json = localStorage.getItem('');                                    //
-        // var oursObject = JSON.parse(monOurs_json);
-        // // Affichage dans la console
-        // console.log(oursObject);
-
-        // const container = document.getElementById("products");
-        // const titleSecondary = document.getElementById("title-secondary");                  // mise en place de la partie HTML dynamique
-        // container.innerHTML += `
-        //     <div class="col-md-12 mr-auto text-center mt-2">  
-        //         <p class="font-weight-bold h3">${oursObject} €</p>
-        //         <a id="sup-article" type="button" class="btn btn-danger my-2" href="produits.html?${teddy._id}">vider panier</a>
-        //     </div>`                                                                         // fin de la mise en page HTML dynamique
-                                                   
-
-        // var monOurs_json = localStorage.getItem("ours");
-        // var oursObject = JSON.parse(monOurs_json);
-        // // Affichage dans la console
-        // console.log(oursObject);
+        fact.innerHTML += `
+            <tbody>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>Total</td>
+                    <td>${(prixFinal)} €</td>
+                </tr>
+            </tbody>
+            ` 
     })
-
-
-
-// const urlRecup = window.location.search;
-// const urlUtils = urlRecup.substr(1)
-// console.log(urlRecup);
-// console.log(urlUtils)
