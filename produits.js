@@ -13,7 +13,7 @@ fetch(api)
         container.innerHTML += `
             <div class="col-md-12 mr-auto text-center mt-2">
                 <h1 class="text-center">${teddy.name}</h1>
-                <img class="col-md-auto center-block" src="${teddy.imageUrl}"></img>
+                <img class="col-md-auto center-block" width="500" height="500" src="${teddy.imageUrl}"></img>
                 <p class="font-weight-bold h3">${teddy.price / 100} €</p>
                 <p class="h6">${teddy.description}</p>
                 <a id="add-article" type="button" class="btn btn-danger my-2" href="produits.html?${teddy._id}">ajouter au panier</a>
@@ -84,4 +84,13 @@ fetch(api)
         supArticle.addEventListener('click', event => {
             localStorage.clear();
         })
+
+        let retourClick = JSON.parse(localStorage.getItem('click'));
+        let retourFinal = document.getElementById("lien-panier");
+
+        if (localStorage.getItem('click') === null) {
+            retourFinal.innerHTML += `(vide)`
+        } else {
+            retourFinal.innerHTML += `(${retourClick.quantity})`
+        }
     })
