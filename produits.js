@@ -8,7 +8,8 @@ fetch(api)
     .then(teddy => {
 
         const container = document.getElementById("products");
-        const titleSecondary = document.getElementById("title-secondary"); // mise en place de la partie HTML dynamique
+        const titleSecondary = document.getElementById("title-secondary");
+         // mise en place de la partie HTML dynamique
         container.innerHTML += `
             <div class="col-md-12 mr-auto text-center mt-2">
                 <h1 class="text-center">${teddy.name}</h1>
@@ -18,7 +19,16 @@ fetch(api)
                 <a id="add-article" type="button" class="btn btn-danger my-2" href="produits.html?${teddy._id}">ajouter au panier</a>
                 <a id="sup-article" type="button" class="btn btn-danger my-2" href="produits.html?${teddy._id}">vider panier</a>
             </div>`
+            
         titleSecondary.innerHTML += `${teddy.name}` // fin de la mise en page HTML dynamique
+
+        const choix = document.getElementById("couleur-choix");
+        const listOurs = teddy.colors;
+
+        for (let i = 0; i < listOurs.length; i++) {
+            let retour = listOurs[0 + i];
+            choix.innerHTML += `<option value="couleur">${retour}</option>`
+        }
 
         let oursTab = [];
 
