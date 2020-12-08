@@ -16,8 +16,8 @@ fetch(api)
                 <img class="col-md-auto center-block" width="500" height="500" src="${teddy.imageUrl}"></img>
                 <p class="font-weight-bold h3">${teddy.price / 100} €</p>
                 <p class="h6">${teddy.description}</p>
-                <a id="add-article" type="button" class="btn btn-danger my-2" href="produits.html?${teddy._id}">ajouter au panier</a>
-                <a id="sup-article" type="button" class="btn btn-danger my-2" href="produits.html?${teddy._id}">vider panier</a>
+                <button id="add-article" type="button" class="btn btn-danger my-2">ajouter au panier</button>
+                <button id="sup-article" type="button" class="btn btn-danger my-2">vider panier</button>
             </div>`
             
         titleSecondary.innerHTML += `${teddy.name}` // fin de la mise en page HTML dynamique
@@ -50,6 +50,8 @@ fetch(api)
                 localStorage.setItem("ours", JSON.stringify(oursTab));
             } else {
                 oursTab = JSON.parse(localStorage.getItem('ours'));
+                const ours = oursTab.find(ours => ours.name === teddy.name)
+                console.log(ours);
                 oursTab.forEach((newOursTab) => {
                     if (teddy.name === newOursTab.name) {
                         newOursTab.quantity++;
@@ -60,6 +62,7 @@ fetch(api)
                 localStorage.setItem('ours', JSON.stringify(oursTab))
             }
         }
+        
 
         let click = {quantity: 1}
 

@@ -15,7 +15,7 @@ fetch(api)
         for (let i = 0; i < retour.length; i++) {
 
             let p = retour[i];
-
+            
             fact.innerHTML += `
             <tbody>
                 <tr>
