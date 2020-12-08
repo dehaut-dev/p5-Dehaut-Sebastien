@@ -19,7 +19,7 @@ fetch(api)
             fact.innerHTML += `
             <tbody>
                 <tr>
-                    <td class="border" scope="col"><img width="80" src='${p["img"]}'></img></td>
+                    <td class="border" scope="col"><a href="produits.html?${p["id"]}"><img width="80" src="${p["img"]}"></a></td>
                     <td class="border" scope="row">${p["name"]}</td>
                     <td class="border">${p["price"]} €</td>
                     <td class="border">${p["quantity"]}</td>

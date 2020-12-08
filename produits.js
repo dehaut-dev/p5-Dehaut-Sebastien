@@ -36,6 +36,7 @@ fetch(api)
             name: teddy.name,
             img: teddy.imageUrl,
             price: teddy.price / 100,
+            id : teddy._id,
             quantity: 1
         };
 
