@@ -42,7 +42,7 @@ fetch(api)
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td>Total</td>
+                    <td class="border">Prix Total :</td>
                     <td>${(prixFinal)} €</td>
                 </tr>
             </tbody>
