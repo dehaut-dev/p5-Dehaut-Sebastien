@@ -204,6 +204,26 @@
             }
         }
 
+
+        //version ameliorer panier 
+
+        function add() {
+
+            if (localStorage.getItem("ours") === null) {
+                oursTab.push(oursId);
+                localStorage.setItem("ours", JSON.stringify(oursTab));
+            } else {
+                oursTab = JSON.parse(localStorage.getItem('ours'));
+                const ours = oursTab.find(ours => ours.name === teddy.name)
+                oursTab.forEach((ours) => {
+                        ours.quantity++;
+                        newOursId = false;
+                })
+                if (newOursId) oursTab.push(oursId);
+                localStorage.setItem('ours', JSON.stringify(oursTab))
+            }
+        }
+
         // panier inutile 
 
         function panier (){
@@ -217,10 +237,10 @@
           }
           panier ();
 
+        //click 
 
-          // finction click valable 
 
-          let click = {quantity: 1}
+        let click = {quantity: 1}
 
         function onClick (){
             if (localStorage.getItem("click") === null) {
@@ -234,3 +254,14 @@
             }
         }
 
+
+        let retourClick = JSON.parse(localStorage.getItem('click'));
+        let retourFinal = document.getElementById("lien-panier");
+
+        if (localStorage.getItem('click') === null) {
+            retourFinal.innerHTML += `(vide)`
+        } else {
+            retourFinal.innerHTML += `(${retourClick.quantity})`
+        }
+
+        

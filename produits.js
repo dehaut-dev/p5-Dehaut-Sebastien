@@ -7,18 +7,14 @@ fetch(api)
 
     .then(teddy => {
 
-        const container = document.getElementById("products");
+        const container = document.getElementById("fiche-article");
         const titleSecondary = document.getElementById("title-secondary");
          // mise en place de la partie HTML dynamique
         container.innerHTML += `
-            <div class="col-md-12 mr-auto text-center mt-2">
                 <h1 class="text-center">${teddy.name}</h1>
                 <img class="col-md-auto center-block" width="500" height="500" src="${teddy.imageUrl}"></img>
                 <p class="font-weight-bold h3">${teddy.price / 100} €</p>
-                <p class="h6">${teddy.description}</p>
-                <button id="add-article" type="button" class="btn btn-danger my-2">ajouter au panier</button>
-                <button id="sup-article" type="button" class="btn btn-danger my-2">vider panier</button>
-            </div>`
+                <p class="h6">${teddy.description}</p>`
             
         titleSecondary.innerHTML += `${teddy.name}` // fin de la mise en page HTML dynamique
 
@@ -50,10 +46,10 @@ fetch(api)
                 localStorage.setItem("ours", JSON.stringify(oursTab));
             } else {
                 oursTab = JSON.parse(localStorage.getItem('ours'));
-                const ours = oursTab.find(ours => ours.name === teddy.name)
-                console.log(ours);
+                // const ours = oursTab.find(ours => ours.name === teddy.name)
+                // console.log(ours);
                 oursTab.forEach((newOursTab) => {
-                    if (teddy.name === newOursTab.name) {
+                    if (teddy._id === newOursTab.id) {
                         newOursTab.quantity++;
                         newOursId = false;
                     }
@@ -63,38 +59,13 @@ fetch(api)
             }
         }
         
-
-        let click = {quantity: 1}
-
-        function onClick (){
-            if (localStorage.getItem("click") === null) {
-                localStorage.setItem("click", JSON.stringify(click));
-            } else {
-                click = JSON.parse(localStorage.getItem('click'))
-                for (newClick in click){
-                click.quantity++;
-            }
-                localStorage.setItem("click", JSON.stringify(click));
-            }
-        }
-
         const addArticle = document.getElementById("add-article");
         addArticle.addEventListener('click', event => {
             add();
-            onClick();
         })
 
         const supArticle = document.getElementById("sup-article");
         supArticle.addEventListener('click', event => {
             localStorage.clear();
         })
-
-        let retourClick = JSON.parse(localStorage.getItem('click'));
-        let retourFinal = document.getElementById("lien-panier");
-
-        if (localStorage.getItem('click') === null) {
-            retourFinal.innerHTML += `(vide)`
-        } else {
-            retourFinal.innerHTML += `(${retourClick.quantity})`
-        }
     })

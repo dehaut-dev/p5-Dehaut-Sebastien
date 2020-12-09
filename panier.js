@@ -47,12 +47,5 @@ fetch(api)
                 </tr>
             </tbody>
             ` 
-        let retourClick = JSON.parse(localStorage.getItem('click'));
-        let retourFinal = document.getElementById("lien-panier");
-
-        if (localStorage.getItem('click') === null) {
-            retourFinal.innerHTML += `(vide)`
-        } else {
-            retourFinal.innerHTML += `(${retourClick.quantity})`
-        }
+ 
     })
