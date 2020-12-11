@@ -264,4 +264,60 @@
             retourFinal.innerHTML += `(${retourClick.quantity})`
         }
 
-        
+
+        ///:
+
+
+        // colors = addEventListener( "mouseover", event  => {
+        //     oursId.colors = choix.value;
+        // })
+
+        let liste, texte;
+        liste = document.getElementById("couleur-choix");
+        liste = value=this.selectedIndex;
+        texte = liste.options[liste.selectedIndex].value;
+
+        for (i=0; i < selectBox.length; i++) 
+        {
+            if (selectBox[i].value) 
+            {
+                selectedList.push(selectBox[i]);
+            }
+        }
+
+        //supp
+
+        supp.addEventListener("click", function(event){
+            suppressionArticle(event.target.id);
+        });
+
+
+
+//panier
+        // for (let i = 0; i < retour.length; i++) {
+
+        //     let p = retour[i];
+            
+        //     fact.innerHTML += `
+        //     <tbody>
+        //         <tr>
+        //             <td class="border" scope="col"><a href="produits.html?${p["id"]}"><img width="80" src="${p["img"]}"></a><a class="ml-5"><i class="fas fa-trash-alt"></i></a></td>
+        //             <td class="border" scope="row">${p["name"]}</td>
+        //             <td class="border">${p["price"]} €</td>
+        //             <td class="border">${p["quantity"]}</td>
+        //             <td class""prix>${(p["price"])*(p["quantity"])} €</td>
+        //         </tr>
+        //     </tbody>
+        //     `                
+        //     prixGlobal = (p["price"])*(p["quantity"]);
+
+        //     prixTotal.push(prixGlobal);
+        // }
+
+
+      //  supp panier 
+
+      const supArticle = document.getElementById("sup-article");
+        supArticle.addEventListener('click', event => {
+            localStorage.clear();
+        })

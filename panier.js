@@ -4,48 +4,63 @@ console.log(api);
 
 fetch(api)
     .then(response => response.json())
-    
+
     .then(teddies => {
 
-        let retour = JSON.parse(localStorage.getItem('ours'));
-        const fact = document.getElementById("table");
+        if (localStorage.getItem("ours") != null) {
 
-        var prixTotal = [];
+            let retour = JSON.parse(localStorage.getItem('ours'));
+            const fact = document.getElementById("table-p");
 
-        for (let i = 0; i < retour.length; i++) {
+            var prixTotal = [];
 
-            let p = retour[i];
-            
-            fact.innerHTML += `
+
+            for (let i = 0; i < retour.length; i++) {
+
+                let p = retour[i];
+
+                fact.innerHTML += `
             <tbody>
                 <tr>
-                    <td class="border" scope="col"><a href="produits.html?${p["id"]}"><img width="80" src="${p["img"]}"></a></td>
+                    <td class="border" scope="col"><a class="mr-0" href="produits.html?${p["id"]}"><img width="60" height="auto" src="${p["img"]}"></a><a class="float-right mr--5"><i class="fas fa-trash-alt"></i></a></td>
                     <td class="border" scope="row">${p["name"]}</td>
-                    <td class="border">${p["price"]} €</td>
+                    <td class="border">${p["price"].toFixed(2)} €</td>
                     <td class="border">${p["quantity"]}</td>
-                    <td class""prix>${(p["price"])*(p["quantity"])} €</td>
+                    <td class""prix>${((p["price"])*(p["quantity"])).toFixed(2)} €</td>
                 </tr>
             </tbody>
-            `    
-            prixGlobal = (p["price"])*(p["quantity"]);
+            `
+                prixGlobal = (p["price"]) * (p["quantity"]);
 
-            prixTotal.push(prixGlobal);
+                prixTotal.push(prixGlobal);
+            }
+
+
+            const prixFinal = document.getElementById("prix-final")
+            const reducer = (accumulator, currentValue) => accumulator + currentValue;
+
+            let prixFinaladd = prixTotal.reduce(reducer);
+
+            prixFinal.innerHTML +=
+                `${(prixFinaladd).toFixed(2)} €`
+
+            const supArticle = document.getElementById("sup-article");
+            supArticle.addEventListener('click', event => {
+                localStorage.clear();
+            })
+
+        } else {
+
+            const videPlein = document.getElementById("plein");
+            
+            videPlein.replaceWith("");
+
+            const vide = document.getElementById("vide");
+            vide.innerHTML += `<p class="h1 text-center mt-5">Votre panier est vide !!!</p>`
         }
 
-        const reducer = (accumulator, currentValue) => accumulator + currentValue;
-            
-        let prixFinal = prixTotal.reduce(reducer);
 
-        fact.innerHTML += `
-            <tbody>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="border">Prix Total :</td>
-                    <td>${(prixFinal)} €</td>
-                </tr>
-            </tbody>
-            ` 
- 
+
+
+
     })

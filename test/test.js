@@ -13,19 +13,20 @@ fetch(api)
         container.innerHTML += `
                 <h1 class="text-center">${teddy.name}</h1>
                 <img class="col-md-auto center-block" width="500" height="500" src="${teddy.imageUrl}"></img>
-                <p class="font-weight-bold h3">${(teddy.price/100).toFixed(2)} €</p>
-                <p class="h6">${teddy.description}</p>
-            </div>`
+                <p class="font-weight-bold h3">${teddy.price / 100} €</p>
+                <p class="h6">${teddy.description}</p>`
             
         titleSecondary.innerHTML += `${teddy.name}` // fin de la mise en page HTML dynamique
 
         const choix = document.getElementById("couleur-choix");
         const listOurs = teddy.colors;
+        
 
         for (let i = 0; i < listOurs.length; i++) {
             let retour = listOurs[0 + i];
-            choix.innerHTML += `<option value="couleur">${retour}</option>`
+            choix.innerHTML += `<option type="texte" value>${retour}</option>`
         }
+       
 
         let oursTab = [];
 
@@ -34,11 +35,19 @@ fetch(api)
             img: teddy.imageUrl,
             price: teddy.price / 100,
             id : teddy._id,
-            quantity: 1
+            quantity: 1,
+            colors : choix.value
         };
 
+        // colors = addEventListener( "mouseover", event  => {
+        //     oursId.colors = choix.value;
+        // })
+
+        color =  choix.querySelector.value;
+    
         newOursId = true ;
         
+
         function add() {
 
             if (localStorage.getItem("ours") === null) {
@@ -47,9 +56,9 @@ fetch(api)
             } else {
                 oursTab = JSON.parse(localStorage.getItem('ours'));
                 // const ours = oursTab.find(ours => ours.name === teddy.name)
-                // console.log(quantityAdd);
+                // console.log(ours);
                 oursTab.forEach((newOursTab) => {
-                    if (teddy.name === newOursTab.name) {
+                    if (teddy._id === newOursTab.id) {
                         newOursTab.quantity++;
                         newOursId = false;
                     }
@@ -58,26 +67,15 @@ fetch(api)
                 localStorage.setItem('ours', JSON.stringify(oursTab))
             }
         }
-
-              
-
+        
         const addArticle = document.getElementById("add-article");
-        addArticle.textContent = "ajouter au panier ";
-
-        var count = 0;
-
-        function countOurs(){
-            count ++
-            console.log(count);
-        }
-
         addArticle.addEventListener('click', event => {
-            add(); 
-            countOurs();
-            if (count === 1) {
-                addArticle.textContent = count + " article" +  " ajouté au panier";
-            } else {
-                addArticle.textContent = count + " articles" +  " ajoutés au panier";
-            } 
+            add();
+            console.log(color);
+        })
+
+        const supArticle = document.getElementById("sup-article");
+        supArticle.addEventListener('click', event => {
+            localStorage.clear();
         })
     })
