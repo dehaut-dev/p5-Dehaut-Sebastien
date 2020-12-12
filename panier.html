@@ -92,11 +92,11 @@
             <div class="row ">
                 <div class="col-md-12 order-md-1">
                     <h4 class="mb-3 text-center">Adresse de facturation</h4>
-                    <form class="needs-validation" name="formulaire" id="formulaire" novalidate>
+                    <form class="needs-validation" id="formulaire" novalidate>
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label for="firstName">Prénom</label>
-                                <input type="text" name="input" class="form-control" id="prenom" placeholder="Dehaut"
+                                <input type="text" class="form-control" id="prenom" placeholder="Dehaut"
                                     value="" required>
                                 <div id='prenominvalide' class="invalid-feedback">
                                     La validation du prénom est requise.
@@ -104,7 +104,7 @@
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="lastName">Nom</label>
-                                <input type="text" name="input" class="form-control" id="nom" placeholder="Sébastien"
+                                <input type="text" class="form-control" id="nom" placeholder="Sébastien"
                                     value="" required>
                                 <div class="invalid-feedback">
                                     La validation du nom est requise.
@@ -114,7 +114,7 @@
 
                         <div class="mb-3">
                             <label for="adresse">Adresse <span class="text-muted"></span></label>
-                            <input type="text" name="input" class="form-control" id="adresse"
+                            <input type="text" class="form-control" id="adresse"
                                 placeholder="19 rue de la paix" required>
                             <div class="invalid-feedback">
                                 Entrez une adresse valide
@@ -124,8 +124,7 @@
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label for="ville">Ville</label>
-                                <input type="text" name="input" class="form-control" id="ville" placeholder="Marseille"
-                                    name="input" required>
+                                <input type="text" class="form-control" id="ville" placeholder="Marseille" required>
                                 <div class="invalid-feedback">
                                     Entrez votre ville.
                                 </div>
@@ -134,7 +133,7 @@
                             <div class="col-md-6 mb-3">
     
                                 <label for="email">Email <span class="text-muted"></span></label>
-                                <input type="email" name="input" class="form-control" id="email"
+                                <input type="email" class="form-control" id="email"
                                     placeholder="exemple@exemple.fr" required>
                                 <div class="invalid-feedback">
                                     Entrez un email valide
@@ -145,7 +144,7 @@
                         <div class="container col-md-4">
                             <button class="btn btn-primary btn-lg center-block" type="submit" id="confirmercommande">Confirmer la commande</button>
                         </div>
-                        
+
                     </form>
                 </div>
             </div>
@@ -164,6 +163,7 @@
     </footer>
 
     <!-- Optional JavaScript -->
+    
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">

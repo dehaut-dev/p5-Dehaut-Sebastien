@@ -48,7 +48,52 @@ fetch(api)
             supArticle.addEventListener('click', event => {
                 localStorage.clear();
             })
+            
+            window.addEventListener('load', function() {
+                var forms = document.getElementsByClassName('needs-validation');
+                var validation = Array.prototype.filter.call(forms, function(form) {
+                  form.addEventListener('submit', function(event) {
+                    if (form.checkValidity() === false) {
+                      event.preventDefault();
+                      event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                  }, false);
+                });
+            }, false);
 
+              const confirmerCommande = document.getElementById("confirmercommande");
+
+              
+
+              const contact = {};            
+
+            // let commande = JSON.parse(localStorage.getItem('ours'));
+
+              function addPanier(object){
+                prenomId =  document.getElementById("prenom");
+                nomId = document.getElementById("nom");
+                adresseId = document.getElementById("adresse");
+                villeId = document.getElementById("ville");
+                emailId = document.getElementById("email");
+                prenom = prenomId;
+                nom = nomId;
+                adresse = adresseId;
+                ville = villeId;
+                email = emailId;
+                contact.prenom =  prenom.value;
+                contact.nom = nom.value;
+                contact.adresse = adresse.value;
+                contact.ville = ville.value;
+                contact.email = email.value;
+                localStorage.setItem('products', JSON.stringify(contact))
+              }
+
+            confirmerCommande.addEventListener("click", event => {
+                addPanier(contact);
+                console.log(contact);
+            })
+        
         } else {
 
             const videPlein = document.getElementById("plein");
@@ -58,9 +103,4 @@ fetch(api)
             const vide = document.getElementById("vide");
             vide.innerHTML += `<p class="h1 text-center mt-5">Votre panier est vide !!!</p>`
         }
-
-
-
-
-
     })

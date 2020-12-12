@@ -272,17 +272,16 @@
         //     oursId.colors = choix.value;
         // })
 
-        let liste, texte;
-        liste = document.getElementById("couleur-choix");
-        liste = value=this.selectedIndex;
-        texte = liste.options[liste.selectedIndex].value;
+        for (let i = 0; i < listOurs.length; i++) {
+            let retour = listOurs[0 + i];
+            choix.innerHTML += `<option value="${retour}">${retour}</option>`
+        }
 
-        for (i=0; i < selectBox.length; i++) 
-        {
-            if (selectBox[i].value) 
-            {
-                selectedList.push(selectBox[i]);
-            }
+        function change_valeur() {
+            select = document.getElementById("couleur-choix");
+            choice = select.selectedIndex  // Récupération de l'index du <option> choisi
+            valeur_choisie = select.options[choice].value; 
+            console.log(valeur_choisie);
         }
 
         //supp

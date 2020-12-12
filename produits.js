@@ -21,11 +21,21 @@ fetch(api)
 
         const choix = document.getElementById("couleur-choix");
         const listOurs = teddy.colors;
+        
 
         for (let i = 0; i < listOurs.length; i++) {
             let retour = listOurs[0 + i];
-            choix.innerHTML += `<option value="couleur">${retour}</option>`
+            choix.innerHTML += `<option value="${retour}">${retour}</option>`
         }
+
+        function change_valeur(monObjet) {
+            select = document.getElementById("couleur-choix");
+            choice = select.selectedIndex  // Récupération de l'index du <option> choisi
+            valeur_choisie = select.options[choice].value;
+            oursId.colors = valeur_choisie
+        }
+
+        
 
         let oursTab = [];
 
@@ -34,7 +44,7 @@ fetch(api)
             img: teddy.imageUrl,
             price: teddy.price / 100,
             id : teddy._id,
-            quantity: 1
+            quantity: 1,
         };
 
         newOursId = true ;
@@ -47,9 +57,10 @@ fetch(api)
             } else {
                 oursTab = JSON.parse(localStorage.getItem('ours'));
                 // const ours = oursTab.find(ours => ours.name === teddy.name)
+                // console.log(ours);
                 // console.log(quantityAdd);
                 oursTab.forEach((newOursTab) => {
-                    if (teddy.name === newOursTab.name) {
+                    if (teddy._id === newOursTab.id) {
                         newOursTab.quantity++;
                         newOursId = false;
                     }
@@ -57,23 +68,20 @@ fetch(api)
                 if (newOursId) oursTab.push(oursId);
                 localStorage.setItem('ours', JSON.stringify(oursTab))
             }
-        }
-
-              
+        }   
 
         const addArticle = document.getElementById("add-article");
         addArticle.textContent = "ajouter au panier ";
 
         var count = 0;
-
         function countOurs(){
             count ++
-            console.log(count);
         }
 
         addArticle.addEventListener('click', event => {
+            change_valeur(oursId);
             add(); 
-            countOurs();
+            countOurs();            
             if (count === 1) {
                 addArticle.textContent = count + " article" +  " ajouté au panier";
             } else {
