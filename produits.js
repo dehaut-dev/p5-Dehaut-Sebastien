@@ -88,4 +88,14 @@ fetch(api)
                 addArticle.textContent = count + " articles" +  " ajoutés au panier";
             } 
         })
+        
+        const panier = document.getElementById("lien-panier");
+
+        panier.addEventListener("click", event => {
+            if (localStorage.getItem("ours") === null) {
+                window.location = `panierVide.html`
+            } else {
+                window.location = `panier.html`
+            }
+        })
     })

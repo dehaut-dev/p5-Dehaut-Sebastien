@@ -7,8 +7,6 @@ fetch(api)
 
     .then(teddies => {
 
-        if (localStorage.getItem("ours") != null) {
-
             let retour = JSON.parse(localStorage.getItem('ours'));
             const fact = document.getElementById("table-p");
 
@@ -47,31 +45,13 @@ fetch(api)
             const supArticle = document.getElementById("sup-article");
             supArticle.addEventListener('click', event => {
                 localStorage.clear();
+                window.location = `panierVide.html`
             })
-            
-            window.addEventListener('load', function() {
-                var forms = document.getElementsByClassName('needs-validation');
-                var validation = Array.prototype.filter.call(forms, function(form) {
-                  form.addEventListener('submit', function(event) {
-                    if (form.checkValidity() === false) {
-                      event.preventDefault();
-                      event.stopPropagation();
-                    }
-                    form.classList.add('was-validated');
-                  }, false);
-                });
-            }, false);
 
-              const confirmerCommande = document.getElementById("confirmercommande");
+            const contact = {};
 
-              
-
-              const contact = {};            
-
-            // let commande = JSON.parse(localStorage.getItem('ours'));
-
-              function addPanier(object){
-                prenomId =  document.getElementById("prenom");
+            function addPanier(object) {
+                prenomId = document.getElementById("prenom");
                 nomId = document.getElementById("nom");
                 adresseId = document.getElementById("adresse");
                 villeId = document.getElementById("ville");
@@ -81,26 +61,29 @@ fetch(api)
                 adresse = adresseId;
                 ville = villeId;
                 email = emailId;
-                contact.prenom =  prenom.value;
+                contact.prenom = prenom.value;
                 contact.nom = nom.value;
                 contact.adresse = adresse.value;
                 contact.ville = ville.value;
                 contact.email = email.value;
-                localStorage.setItem('products', JSON.stringify(contact))
-              }
+                if (contact.prenom != "" && contact.nom != "" && contact.adresse != "" && contact.ville != "" && contact.email != "") {
+                    localStorage.setItem('products', JSON.stringify(contact));
+                }
+            }
 
-            confirmerCommande.addEventListener("click", event => {
-                addPanier(contact);
-                console.log(contact);
-            })
-        
-        } else {
-
-            const videPlein = document.getElementById("plein");
+            window.addEventListener('load', function () {
+                var forms = document.getElementsByClassName('needs-validation');
+                var validForm = document.getElementById("confirmercommande");
+                var validation = Array.prototype.filter.call(forms, function (form) {
+                    validForm.addEventListener('click', function (event) {
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        form.classList.add('was-validated');
+                        addPanier(contact);
+                    }, false);
+                });
+            }, false);
             
-            videPlein.replaceWith("");
-
-            const vide = document.getElementById("vide");
-            vide.innerHTML += `<p class="h1 text-center mt-5">Votre panier est vide !!!</p>`
-        }
     })

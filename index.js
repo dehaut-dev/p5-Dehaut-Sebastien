@@ -16,6 +16,17 @@ fetch(api)
         </div>`
 
         }
+
+        const panier = document.getElementById("lien-panier");
+
+        panier.addEventListener("click", event => {
+            if (localStorage.getItem("ours") === null) {
+                window.location = `panierVide.html`
+            } else {
+                window.location = `panier.html`
+            }
+        })
+
         let p = teddies.length;
         console.log(p);
   

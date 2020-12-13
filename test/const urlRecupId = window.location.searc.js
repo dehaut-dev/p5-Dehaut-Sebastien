@@ -320,3 +320,6 @@
         supArticle.addEventListener('click', event => {
             localStorage.clear();
         })
+
+
+        // window.setTimeout(function () { window.location = `validation.html` }, 1)    redirection
