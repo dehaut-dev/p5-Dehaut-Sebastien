@@ -57,8 +57,11 @@ fetch(api)
             adresseId = document.getElementById("adresse");
             villeId = document.getElementById("ville");
             emailId = document.getElementById("email");
+            sexeDef = document.getElementById("inlineFormCustomSelect")
             prenom = prenomId;
             nom = nomId;
+            choice = sexeDef.selectedIndex;
+            sexe = sexeDef.options[choice].value;
             adresse = adresseId;
             ville = villeId;
             email = emailId;
@@ -67,6 +70,7 @@ fetch(api)
             contact.adresse = adresse.value;
             contact.ville = ville.value;
             contact.email = email.value;
+            contact.sexe = sexeDef.value;
             if (contact.prenom != "" && contact.nom != "" && contact.adresse != "" && contact.ville != "" && contact.email != "") {
                 localStorage.setItem('products', JSON.stringify(contact));
                 facture.prixFinal = prixFinaladd;
@@ -76,23 +80,22 @@ fetch(api)
 
         const validForm = document.getElementById("confirmercommande");
 
-        window.addEventListener('load', function () {
-            let forms = document.getElementsByClassName('needs-validation');
-            var validation = Array.prototype.filter.call(forms, function (form) {
-                validForm.addEventListener('click', function (event) {
-                    if (form.checkValidity() === false) {
-                        event.preventDefault();
-                        event.stopPropagation();
-                    }
-                    form.classList.add('was-validated');
-                    addPanier(contact);
-                    if (localStorage.getItem("products") != null && localStorage.getItem("ours") != null && localStorage.getItem("prixFinal") != null) {
-                        validForm.innerHTML = `Veuillez patienter ....`
-                        window.setTimeout(function () {
+
+        let forms = document.getElementsByClassName('needs-validation');
+        var validation = Array.prototype.filter.call(forms, function (form) {
+            validForm.addEventListener('click', function (event) {
+                if (form.checkValidity() === false) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+                addPanier(contact);
+                if (localStorage.getItem("products") != null && localStorage.getItem("ours") != null && localStorage.getItem("prixFinal") != null) {
+                    validForm.innerHTML = `Veuillez patienter ....`
+                    window.setTimeout(function () {
                         window.location = `validation.html`, localStorage.removeItem('ours');
                     }, 2000);
-                    }
-                }, false);
-            });
-        }, false);
+                }
+            }, false);
+        });
     })

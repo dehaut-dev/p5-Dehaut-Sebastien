@@ -91,7 +91,14 @@
                     <h4 class="mb-3 text-center">Adresse de facturation</h4>
                     <form class="needs-validation" id="formulaire" novalidate>
                         <div class="row">
-                            <div class="col-md-6 mb-3">
+                                <div class="col-md-2 ">
+                                  <label class="mr-sm-1" for="inlineFormCustomSelect">Preference</label>
+                                  <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                                    <option value="Monsieur" selected>Monsieur</option>
+                                    <option value="Madame">Madame</option>
+                                  </select>
+                                </div>
+                            <div class="col-md-5 mb-3">
                                 <label for="firstName">Prénom</label>
                                 <input type="text" class="form-control" id="prenom" placeholder="Dehaut" value=""
                                     required>
@@ -99,7 +106,7 @@
                                     La validation du prénom est requise.
                                 </div>
                             </div>
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-5 mb-3">
                                 <label for="lastName">Nom</label>
                                 <input type="text" class="form-control" id="nom" placeholder="Sébastien" value=""
                                     required>
