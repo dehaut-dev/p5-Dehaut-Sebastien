@@ -13,7 +13,7 @@ fetch(api)
         // mise en place de la partie HTML dynamique
         container.innerHTML += `
                 <h1 class="text-center">${teddy.name}</h1>
-                <img class="col-md-auto center-block" width="500" height="500" src="${teddy.imageUrl}"></img>
+                <img class="col-md-auto center-block" width="auto" height="300" src="${teddy.imageUrl}"></img>
                 <p class="font-weight-bold h3">${(teddy.price/100).toFixed(2)} €</p>
                 <p class="h6">${teddy.description}</p>
             </div>`
@@ -33,7 +33,7 @@ fetch(api)
             select = document.getElementById("couleur-choix");
             choice = select.selectedIndex // Récupération de l'index du <option> choisi
             valeur_choisie = select.options[choice].value;
-            oursId.colors = valeur_choisie
+            oursId.colors = valeur_choisie;
         }
 
 
@@ -57,11 +57,8 @@ fetch(api)
                 localStorage.setItem("ours", JSON.stringify(oursTab));
             } else {
                 oursTab = JSON.parse(localStorage.getItem('ours'));
-                // const ours = oursTab.find(ours => ours.name === teddy.name)
-                // console.log(ours);
-                // console.log(quantityAdd);
                 oursTab.forEach((newOursTab) => {
-                    if (teddy._id === newOursTab.id) {
+                    if (teddy._id === newOursTab.id && oursTab.colors == oursTab.colors) {
                         newOursTab.quantity++;
                         newOursId = false;
                     }

@@ -10,7 +10,7 @@ fetch(api)
             container.innerHTML += `
         <div class="col-md-5 mr-auto text-center mt-5 justify-content-between border">
             <h1>${teddy.name}</h1>
-            <img class="col-md-auto center-block" width="200" height="200" src="${teddy.imageUrl}"></img>
+            <img class="col-md-auto" width="200" height="auto" src="${teddy.imageUrl}"></img>
             <div>${(teddy.price/100).toFixed(2)} €</div>
             <a type="button" class="btn btn-danger my-2" href="produits.html?produit=${teddy._id}">Description produit</a>
         </div>`

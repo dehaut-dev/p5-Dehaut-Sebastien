@@ -323,3 +323,8 @@
 
 
         // window.setTimeout(function () { window.location = `validation.html` }, 1)    redirection
+
+
+        /// // const ours = oursTab.find(ours => ours.name === teddy.name)          fonction Steve comparaison
+                // console.log(ours);
+                // console.log(quantityAdd);
