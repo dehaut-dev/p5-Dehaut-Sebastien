@@ -9,19 +9,19 @@ fetch(api)
 
         const container = document.getElementById("fiche-article");
         const titleSecondary = document.getElementById("title-secondary");
-         // mise en place de la partie HTML dynamique
+        // mise en place de la partie HTML dynamique
         container.innerHTML += `
                 <h1 class="text-center">${teddy.name}</h1>
                 <img class="col-md-auto center-block" width="500" height="500" src="${teddy.imageUrl}"></img>
                 <p class="font-weight-bold h3">${(teddy.price/100).toFixed(2)} €</p>
                 <p class="h6">${teddy.description}</p>
             </div>`
-            
+
         titleSecondary.innerHTML += `${teddy.name}` // fin de la mise en page HTML dynamique
 
         const choix = document.getElementById("couleur-choix");
         const listOurs = teddy.colors;
-        
+
 
         for (let i = 0; i < listOurs.length; i++) {
             let retour = listOurs[0 + i];
@@ -30,12 +30,12 @@ fetch(api)
 
         function change_valeur(monObjet) {
             select = document.getElementById("couleur-choix");
-            choice = select.selectedIndex  // Récupération de l'index du <option> choisi
+            choice = select.selectedIndex // Récupération de l'index du <option> choisi
             valeur_choisie = select.options[choice].value;
             oursId.colors = valeur_choisie
         }
 
-        
+
 
         let oursTab = [];
 
@@ -43,12 +43,12 @@ fetch(api)
             name: teddy.name,
             img: teddy.imageUrl,
             price: teddy.price / 100,
-            id : teddy._id,
+            id: teddy._id,
             quantity: 1,
         };
 
-        newOursId = true ;
-        
+        newOursId = true;
+
         function add() {
 
             if (localStorage.getItem("ours") === null) {
@@ -68,27 +68,28 @@ fetch(api)
                 if (newOursId) oursTab.push(oursId);
                 localStorage.setItem('ours', JSON.stringify(oursTab))
             }
-        }   
+        }
 
         const addArticle = document.getElementById("add-article");
         addArticle.textContent = "ajouter au panier ";
 
         var count = 0;
-        function countOurs(){
-            count ++
+
+        function countOurs() {
+            count++
         }
 
         addArticle.addEventListener('click', event => {
             change_valeur(oursId);
-            add(); 
-            countOurs();            
+            add();
+            countOurs();
             if (count === 1) {
-                addArticle.textContent = count + " article" +  " ajouté au panier";
+                addArticle.textContent = count + " article" + " ajouté au panier";
             } else {
-                addArticle.textContent = count + " articles" +  " ajoutés au panier";
-            } 
+                addArticle.textContent = count + " articles" + " ajoutés au panier";
+            }
         })
-        
+
         const panier = document.getElementById("lien-panier");
 
         panier.addEventListener("click", event => {
