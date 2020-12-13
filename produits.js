@@ -1,5 +1,6 @@
 const urlRecupId = window.location.search;
-const urlRecup = urlRecupId.substr(1);
+var searchParams = new URLSearchParams(urlRecupId);
+const urlRecup = searchParams.getAll("produit");
 const api = "http://localhost:3000/api/teddies/" + urlRecup;
 
 fetch(api)
