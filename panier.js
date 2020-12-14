@@ -23,7 +23,7 @@ fetch(api)
             fact.innerHTML += `
             <tbody>
                 <tr>
-                    <td class="border" scope="col"><a class="mr-0" href="produits.html?${p["id"]}"><img width="60" height="auto" src="${p["img"]}"></a><a class="float-right mr--5"><i class="fas fa-trash-alt"></i></a></td>
+                    <td class="border" scope="col"><a class="mr-0" href="produits.html?${p["id"]}"><img width="60" height="auto" src="${p["img"]}"></a></td>
                     <td class="border" scope="row">${p["name"]}</td>
                     <td class="border">${p["price"].toFixed(2)} €</td>
                     <td class="border">${p["quantity"]}</td>
@@ -93,6 +93,24 @@ fetch(api)
                 addPanier(contact);
                 if (localStorage.getItem("products") != null && localStorage.getItem("ours") != null && localStorage.getItem("prixFinal") != null) {
                     validForm.innerHTML = `Veuillez patienter ....`
+                    /* if (!req.body.contact ||
+                        !req.body.contact.firstName ||
+                        !req.body.contact.lastName ||
+                        !req.body.contact.address ||
+                        !req.body.contact.city ||
+                        !req.body.contact.email ||
+                        !req.body.products) {
+                    } */
+                    const data = {
+                        contact : {
+                            firstName : ""
+                        }, 
+                        products : [
+                            "",
+                            ""
+                        ]
+                    }
+                    // fetch post data => url 
                     window.setTimeout(function () {
                         window.location = `validation.html`, localStorage.removeItem('ours');
                     }, 2000);

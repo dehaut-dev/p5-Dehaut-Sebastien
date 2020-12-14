@@ -79,3 +79,9 @@ fetch(api)
             localStorage.clear();
         })
     })
+
+
+
+    //corbeille
+    
+    <a class="float-right mr--5"><i class="fas fa-trash-alt"></i></a>

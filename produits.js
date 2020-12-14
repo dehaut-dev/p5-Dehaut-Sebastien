@@ -48,17 +48,20 @@ fetch(api)
             quantity: 1,
         };
 
-        newOursId = true;
+        
 
         function add() {
-
+            newOursId = true;
             if (localStorage.getItem("ours") === null) {
                 oursTab.push(oursId);
                 localStorage.setItem("ours", JSON.stringify(oursTab));
             } else {
                 oursTab = JSON.parse(localStorage.getItem('ours'));
+                const selectColor = document.getElementById("couleur-choix").value;
+                console.log(selectColor);
                 oursTab.forEach((newOursTab) => {
-                    if (teddy._id === newOursTab.id && oursTab.colors == oursTab.colors) {
+                    console.log(teddy._id +" === " + newOursTab.id +" && " + newOursTab.colors +" == "+ selectColor);
+                    if (teddy._id === newOursTab.id && newOursTab.colors == selectColor) {
                         newOursTab.quantity++;
                         newOursId = false;
                     }
