@@ -1,5 +1,4 @@
 const api = "http://localhost:3000/api/teddies/";
-console.log(api);
 
 fetch(api)
     .then(response => response.json())
@@ -11,9 +10,9 @@ fetch(api)
         let retour = JSON.parse(localStorage.getItem('ours'));
         const fact = document.getElementById("table-p");
 
-        console.log(retour);
-
         var prixTotal = [];
+        var products = [];
+        
 
 
         for (let i = 0; i < retour.length; i++) {
@@ -23,8 +22,8 @@ fetch(api)
             fact.innerHTML += `
             <tbody>
                 <tr>
-                    <td class="border" scope="col"><a class="mr-0" href="produits.html?${p["id"]}"><img width="60" height="auto" src="${p["img"]}"></a></td>
-                    <td class="border" scope="row">${p["name"]}</td>
+                    <td class="border" scope="row"><a class="mr-0" href="produits.html?${p["id"]}"><img width="60" height="auto" src="${p["img"]}"> </a>${p["name"]}</td>
+                    <td class="border" scope="row">${p["color"]}</td>
                     <td class="border">${p["price"].toFixed(2)} €</td>
                     <td class="border">${p["quantity"]}</td>
                     <td class""prix>${((p["price"])*(p["quantity"])).toFixed(2)} €</td>
@@ -34,8 +33,14 @@ fetch(api)
             prixGlobal = (p["price"]) * (p["quantity"]);
 
             prixTotal.push(prixGlobal);
+
+            products.push(p["id"]);
+
         }
 
+        // 
+
+        console.log(products);
 
         const prixFinal = document.getElementById("prix-final")
         const reducer = (accumulator, currentValue) => accumulator + currentValue;
@@ -101,19 +106,27 @@ fetch(api)
                         !req.body.contact.email ||
                         !req.body.products) {
                     } */
+                    
                     const data = {
                         contact : {
-                            firstName : ""
+                            firstName : contact.prenom,
+                            lastName : contact.nom,
+                            address : contact.adresse,
+                            city : contact.ville,
+                            email : contact.email
                         }, 
-                        products : [
-                            "",
-                            ""
-                        ]
+                        
+                        products
                     }
+                    console.log(contact);
+                    console.log(products);
                     // fetch post data => url 
+                    const response = await postData('POST', 'http://localhost:3000/api/teddy/order', cartInformation)
                     window.setTimeout(function () {
-                        window.location = `validation.html`, localStorage.removeItem('ours');
-                    }, 2000);
+                        // window.location = `validation.html`, localStorage.removeItem('ours');
+                       
+                        window.setTimeout(function () { window.location = `validation.html?id=${response.orderId}&price=${total}&user=${prenom.value}` }, 2000)
+                    }, 20000);
                 }
             }, false);
         });

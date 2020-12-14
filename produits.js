@@ -33,7 +33,7 @@ fetch(api)
             select = document.getElementById("couleur-choix");
             choice = select.selectedIndex // Récupération de l'index du <option> choisi
             valeur_choisie = select.options[choice].value;
-            oursId.colors = valeur_choisie;
+            oursId.color = valeur_choisie;
         }
 
 
@@ -60,8 +60,8 @@ fetch(api)
                 const selectColor = document.getElementById("couleur-choix").value;
                 console.log(selectColor);
                 oursTab.forEach((newOursTab) => {
-                    console.log(teddy._id +" === " + newOursTab.id +" && " + newOursTab.colors +" == "+ selectColor);
-                    if (teddy._id === newOursTab.id && newOursTab.colors == selectColor) {
+                    // console.log(teddy._id +" === " + newOursTab.id +" && " + newOursTab.color +" == "+ selectColor);
+                    if (teddy._id === newOursTab.id && newOursTab.color === selectColor) {
                         newOursTab.quantity++;
                         newOursId = false;
                     }
