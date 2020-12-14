@@ -1,14 +1,17 @@
 const api = "http://localhost:3000/api/teddies/";
 console.log(api);
 
-
 fetch(api)
     .then(response => response.json())
 
     .then(teddies => {
 
+        
+
         let retour = JSON.parse(localStorage.getItem('ours'));
         const fact = document.getElementById("table-p");
+
+        console.log(retour);
 
         var prixTotal = [];
 
@@ -58,25 +61,23 @@ fetch(api)
             villeId = document.getElementById("ville");
             emailId = document.getElementById("email");
             sexeDef = document.getElementById("inlineFormCustomSelect")
-            prenom = prenomId;
-            nom = nomId;
             choice = sexeDef.selectedIndex;
             sexe = sexeDef.options[choice].value;
-            adresse = adresseId;
-            ville = villeId;
-            email = emailId;
-            contact.prenom = prenom.value;
-            contact.nom = nom.value;
-            contact.adresse = adresse.value;
-            contact.ville = ville.value;
-            contact.email = email.value;
+            contact.prenom = prenomId.value;
+            contact.nom = nomId.value;
+            contact.adresse = adresseId.value;
+            contact.ville = villeId.value;
+            contact.email = emailId.value;
             contact.sexe = sexeDef.value;
             if (contact.prenom != "" && contact.nom != "" && contact.adresse != "" && contact.ville != "" && contact.email != "") {
                 localStorage.setItem('products', JSON.stringify(contact));
                 facture.prixFinal = prixFinaladd;
+                facture.id = retour.id;
                 localStorage.setItem('prixFinal', JSON.stringify(facture));
             }
         }
+        
+
 
         const validForm = document.getElementById("confirmercommande");
 
@@ -98,4 +99,11 @@ fetch(api)
                 }
             }, false);
         });
+    })
+
+    window.addEventListener('load', event => {
+        if (localStorage.getItem("ours") === null) {
+            localStorage.clear();
+            window.location = `panierVide.html`
+        }
     })

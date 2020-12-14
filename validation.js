@@ -17,7 +17,7 @@ fetch(api)
 
         sexe.innerHTML = retour.sexe;
         pseudo.innerText = retour.nom;
-        prix.innerText = retourPrix.prixFinal;
+        prix.innerText = retourPrix.prixFinal.toFixed(2);
 
         boutonRetour.addEventListener("click", event => {
             localStorage.clear();
