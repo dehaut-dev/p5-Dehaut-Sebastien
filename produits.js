@@ -103,11 +103,17 @@ fetch(api)
 
         const panierBis = document.getElementById("panierBis");
 
-        panierBis.addEventListener("click", event => {
-            if (localStorage.getItem("ours") === null) {
-                window.location = `panierVide.html`
-            } else {
-                window.location = `panier.html`
-            }
-        })
+        if (localStorage.getItem("ours") != null) {
+            panierBis.addEventListener("click", event => {
+                if (localStorage.getItem("ours") === null) {
+                    window.location = `panierVide.html`
+                } else {
+                    window.location = `panier.html`
+                }
+            })
+        } else {
+            
+        }
+        
+        
     })

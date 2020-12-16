@@ -5,14 +5,14 @@ fetch(api)
 
     .then(teddies => {
 
-        
+
 
         let retour = JSON.parse(localStorage.getItem('ours'));
         const fact = document.getElementById("table-p");
 
         var prixTotal = [];
         var products = [];
-        
+
 
 
         for (let i = 0; i < retour.length; i++) {
@@ -99,33 +99,35 @@ fetch(api)
                         !req.body.contact.email ||
                         !req.body.products) {
                     } */
-                    
+
                     const data = {
-                        contact : {
-                            firstName : contact.prenom,
-                            lastName : contact.nom,
-                            address : contact.adresse,
-                            city : contact.ville,
-                            email : contact.email
-                        }, 
-                        
+                        contact: {
+                            firstName: contact.prenom,
+                            lastName: contact.nom,
+                            address: contact.adresse,
+                            city: contact.ville,
+                            email: contact.email
+                        },
+
                         products
                     }
                     console.log(contact);
                     console.log(products);
                     // fetch post data => url 
                     // const response = postData('POST', 'http://localhost:3000/api/teddy/order')
-                        // window.location = `validation.html`, ;
+                    // window.location = `validation.html`, ;
 
-                    window.setTimeout(function () { window.location = `validation.html?id=&price=${prixFinaladd}&user=${prenom.value}`, localStorage.removeItem('ours') }, 2000)
-                   }
+                    window.setTimeout(function () {
+                        window.location = `validation.html?id=&price=${prixFinaladd}&user=${prenom.value}`, localStorage.removeItem('ours')
+                    }, 2000)
+                }
             }, false);
         });
-    })
+        window.addEventListener('load', event => {
+            if (localStorage.getItem("ours") === null) {
+                localStorage.clear();
+                window.location = `panierVide.html`
+            }
+        })
 
-    window.addEventListener('load', event => {
-        if (localStorage.getItem("ours") === null) {
-            localStorage.clear();
-            window.location = `panierVide.html`
-        }
     })

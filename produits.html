@@ -39,7 +39,7 @@
                                 <li class="nav-item">
                                     <a type="button" class="btn btn-secondary btn-sm mt-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link" href="#"><i class="fas fa-shopping-basket"></i></a>
                                     <div class="btn-group">
-                                        <div class="dropdown-menu dropdown-menu-right bg-dark text-light px-4 py-3">
+                                        <div class="dropdown-menu dropdown-menu-right bg-dark text-light px-4 py-3" id="dropdown">
                                             <h3 class="text-center">Total</h3>
                                             <table class="table border text-light table-sm" id="table">
                                                 <thead>
@@ -85,7 +85,7 @@
 
     <div class="container text-center mb-3">
         <label for="couleur-choix" href="" class="h4">Choix de la couleur</label><br>
-        <select name="" id="couleur-choix" class="btn btn-warning">
+        <select name="" id="couleur-choix" class="btn btn-light border btn-sm active" aria-pressed="true">
         </select>
     </div>
 
@@ -95,8 +95,7 @@
                     <div id="fiche-article">
                     </div>
                     <div>
-                        <button id="add-article" type="button" class="btn btn-danger my-2"></button>
-
+                        <button id="add-article" type="button" class="btn btn-danger my-2" script=""></button>
                     </div>
                 </div>
         </div>
@@ -112,6 +111,7 @@
             <li class="list-inline-item">&middot;</li>
             <li class="list-inline-item"><a href="#">Conditions d'utilisations</a></li>
         </ul>
+        
     </footer>
 
     <!-- Optional JavaScript -->
