@@ -13,10 +13,8 @@ fetch(api)
         const pseudo = document.getElementById("pseudo");
         const prix = document.getElementById("prix");
         const boutonRetour = document.getElementById("bouton-retour");
-        const sexe = document.getElementById("sexe");
 
-        sexe.innerHTML = retour.sexe;
-        pseudo.innerText = retour.nom;
+        pseudo.innerText = retour.prenom;
         prix.innerText = retourPrix.prixFinal.toFixed(2);
 
         boutonRetour.addEventListener("click", event => {

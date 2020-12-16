@@ -5,6 +5,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.css">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
@@ -32,8 +33,38 @@
                                 <li class="nav-item active">
                                     <a class="nav-link" href="index.html">Accueil</a>
                                 </li>
-                                <li class="nav-item">
+                                <li>
                                     <a class="nav-link" id="lien-panier" href="#">Panier </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a type="button" class="btn btn-secondary btn-sm mt-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link" href="#"><i class="fas fa-shopping-basket"></i></a>
+                                    <div class="btn-group">
+                                        <div class="dropdown-menu dropdown-menu-right bg-dark text-light px-4 py-3">
+                                            <h3 class="text-center">Total</h3>
+                                            <table class="table border text-light table-sm" id="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="border" scope="col">Nom</th>
+                                                        <th class="border" scope="col">Prix</th>
+                                                        <th class="border" scope="col">Qté</th>
+                                                        <th class="border" scope="col">Total</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="table-p">
+                                                </tbody>
+                                                <tbody>
+                                                    <tr>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td class="border">Total:</td>
+                                                        <td id="prix-final"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <button class="btn btn-danger col-md-12" id="panierBis">Panier</button>
+                                        </div>
+                                    </div>
+                                      
                                 </li>
                             </ul>
                         </div>
@@ -54,7 +85,7 @@
 
     <div class="container text-center mb-3">
         <label for="couleur-choix" href="" class="h4">Choix de la couleur</label><br>
-        <select name="" id="couleur-choix">
+        <select name="" id="couleur-choix" class="btn btn-warning">
         </select>
     </div>
 

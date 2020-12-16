@@ -22,14 +22,13 @@ fetch(api)
             fact.innerHTML += `
             <tbody>
                 <tr>
-                    <td class="border" scope="row"><a class="mr-0" href="produits.html?${p["id"]}"><img width="60" height="auto" src="${p["img"]}"> </a>${p["name"]}</td>
+                    <td class="border" scope="row"><a class="mr-0" href="produits.html?produit=${p["id"]}"><img width="60" height="auto" src="${p["img"]}"> </a>${p["name"]}</td>
                     <td class="border" scope="row">${p["color"]}</td>
                     <td class="border">${p["price"].toFixed(2)} €</td>
                     <td class="border">${p["quantity"]}</td>
                     <td class""prix>${((p["price"])*(p["quantity"])).toFixed(2)} €</td>
                 </tr>
-            </tbody>
-            `
+            </tbody>    `
             prixGlobal = (p["price"]) * (p["quantity"]);
 
             prixTotal.push(prixGlobal);
@@ -65,15 +64,11 @@ fetch(api)
             adresseId = document.getElementById("adresse");
             villeId = document.getElementById("ville");
             emailId = document.getElementById("email");
-            sexeDef = document.getElementById("inlineFormCustomSelect")
-            choice = sexeDef.selectedIndex;
-            sexe = sexeDef.options[choice].value;
             contact.prenom = prenomId.value;
             contact.nom = nomId.value;
             contact.adresse = adresseId.value;
             contact.ville = villeId.value;
             contact.email = emailId.value;
-            contact.sexe = sexeDef.value;
             if (contact.prenom != "" && contact.nom != "" && contact.adresse != "" && contact.ville != "" && contact.email != "") {
                 localStorage.setItem('products', JSON.stringify(contact));
                 facture.prixFinal = prixFinaladd;
@@ -81,8 +76,6 @@ fetch(api)
                 localStorage.setItem('prixFinal', JSON.stringify(facture));
             }
         }
-        
-
 
         const validForm = document.getElementById("confirmercommande");
 
@@ -121,13 +114,11 @@ fetch(api)
                     console.log(contact);
                     console.log(products);
                     // fetch post data => url 
-                    const response = await postData('POST', 'http://localhost:3000/api/teddy/order', cartInformation)
-                    window.setTimeout(function () {
-                        // window.location = `validation.html`, localStorage.removeItem('ours');
-                       
-                        window.setTimeout(function () { window.location = `validation.html?id=${response.orderId}&price=${total}&user=${prenom.value}` }, 2000)
-                    }, 20000);
-                }
+                    // const response = postData('POST', 'http://localhost:3000/api/teddy/order')
+                        // window.location = `validation.html`, ;
+
+                    window.setTimeout(function () { window.location = `validation.html?id=&price=${prixFinaladd}&user=${prenom.value}`, localStorage.removeItem('ours') }, 2000)
+                   }
             }, false);
         });
     })

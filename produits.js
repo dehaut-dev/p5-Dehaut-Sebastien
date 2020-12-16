@@ -100,4 +100,14 @@ fetch(api)
                 window.location = `panier.html`
             }
         })
+
+        const panierBis = document.getElementById("panierBis");
+
+        panierBis.addEventListener("click", event => {
+            if (localStorage.getItem("ours") === null) {
+                window.location = `panierVide.html`
+            } else {
+                window.location = `panier.html`
+            }
+        })
     })
