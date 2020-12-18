@@ -6,6 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.css">
+    <link rel="stylesheet" href="../css/style.css">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
@@ -37,15 +38,19 @@
                                     <a class="nav-link" id="lien-panier" href="#">Panier </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a type="button" class="btn btn-secondary btn-sm mt-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link" href="#"><i class="fas fa-shopping-basket"></i></a>
-                                    <div class="btn-group">
-                                        <div class="dropdown-menu dropdown-menu-right bg-dark text-light px-4 py-3" id="dropdown">
-                                            <h3 class="text-center" >Total</h3>
+                                    <a type="button" class="btn btn-secondary btn-sm mt-2" data-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false" class="nav-link" href="#"><i
+                                            class="fas fa-shopping-basket"></i></a>
+                                    <div class="btn-group" id="refresh">
+                                        <div class="dropdown-menu dropdown-menu-right bg-dark text-light px-4 py-3"
+                                            id="dropdown">
+                                            <h3 class="text-center">Total</h3>
                                             <table class="table border text-light table-sm" id="table">
                                                 <thead>
                                                     <tr>
                                                         <th class="border" scope="col">Nom</th>
                                                         <th class="border" scope="col">Prix</th>
+                                                        <th class="border" scope="col">Couleur</th>
                                                         <th class="border" scope="col">Qté</th>
                                                         <th class="border" scope="col">Total</th>
                                                     </tr>
@@ -56,15 +61,16 @@
                                                     <tr>
                                                         <td></td>
                                                         <td></td>
+                                                        <td></td>
                                                         <td class="border">Total:</td>
                                                         <td id="prix-final"></td>
                                                     </tr>
                                                 </tbody>
                                             </table>
-                                            <button class="btn btn-danger col-md-12" id="panierBis">Panier</button>
+                                            <button class="btn btn-danger col-md-12" href="panier.html">Panier</button>
                                         </div>
                                     </div>
-                                      
+
                                 </li>
                             </ul>
                         </div>
@@ -74,26 +80,66 @@
         </div>
     </div>
     <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-md-7">
+                <alert>
+                    <div id="overlay"></div>
+                    <div id="alertPanel">
+                        <h3 class="py-4 text-center h4">Votre article a bien été ajouté au panier</h3>
+                        <div class="texte text-center">
+                            <a class="bouton btn btn-danger my-2 mr-3" href="panier.html">finaliser ma commande</a>
+                            <a class="bouton btn btn-danger my-2" href="index.html">Continuer mes achats</a><br>
+                            <a class="bouton btn btn-danger my-2" id="retouCouleurs">Choisir une autre couleur</a>
+
+                        </div>
+                    </div>
+                </alert>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container-fluid">
         <div class="row">
             <div class="col">
                 <div class="text-center mt-5">
-                    <h1>Bienvenue sur Orinoco</h1>
-                    <h2>Site de vente de Nounours</h2>
+                    <h2 id="title-secondary" class="mb-4">Fiche article de </h2>
                 </div>
             </div>
         </div>
+    </div>
 
-
+    <div class="container text-center mb-3">
+        <label for="couleur-choix" href="" class="h4">Choix de la couleur</label><br>
+        <select name="" id="couleur-choix" class="btn btn-light border btn-sm active" aria-pressed="true">
+        </select>
     </div>
 
     <div class="container bg-secondaire">
-        <div class="row" id="products">
+        <div class="row justify-content-center" id="products">
+            <div class="col-md-8 text-center mt-2">
+                <div id="fiche-article">
+                </div>
+                <div>
+                    <div class="container text-center mb-1 mt-3">
+                        <label for="quantité" href="" class="">Quantité </label>
+                        <select name="" id="quantité" class="btn btn-light border btn-sm active" aria-pressed="true">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </div>
+                    <button id="add-article" type="button" class="btn btn-danger my-2"></button>
+                </div>
+            </div>
         </div>
     </div>
 
     </div>
     <footer class="mt-5 pt-5 py-3 text-muted text-center text-small bg-dark">
-        <p class="mb-1">&copy; 2020 Orinoco | Jean-Sébastien DEHAUT</p>
+        <p class="mb-1">&copy;2020 Orinoco | Jean-Sébastien DEHAUT</p>
         <ul class="list-inline text-center">
             <li class="list-inline-item"><a href="#">À propos</a></li>
             <li class="list-inline-item">&middot;</li>
@@ -101,21 +147,20 @@
             <li class="list-inline-item">&middot;</li>
             <li class="list-inline-item"><a href="#">Conditions d'utilisations</a></li>
         </ul>
+
     </footer>
 
-    <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
-    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
         integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous">
     </script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
         integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous">
     </script>
-    <script src="index.js"></script>
-    <script src="./test/count.js"></script>
+    <script src="../javaScript/produits.js"></script>
+    <script src="../javaScript/count.js"></script>
 </body>
 
 </html>

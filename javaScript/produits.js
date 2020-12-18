@@ -1,4 +1,5 @@
 const urlRecupId = window.location.search;
+console.log(urlRecupId);
 var searchParams = new URLSearchParams(urlRecupId);
 const urlRecup = searchParams.getAll("produit");
 const api = "http://localhost:3000/api/teddies/" + urlRecup;
@@ -8,6 +9,8 @@ fetch(api)
 
     .then(teddy => {
 
+
+
         const container = document.getElementById("fiche-article");
         const titleSecondary = document.getElementById("title-secondary");
         // mise en place de la partie HTML dynamique
@@ -15,8 +18,7 @@ fetch(api)
                 <h1 class="text-center">${teddy.name}</h1>
                 <img class="col-md-auto center-block" width="auto" height="300" src="${teddy.imageUrl}"></img>
                 <p class="font-weight-bold h3">${(teddy.price/100).toFixed(2)} €</p>
-                <p class="h6">${teddy.description}</p>
-            </div>`
+                <p class="h6">${teddy.description}</p>`
 
         titleSecondary.innerHTML += `${teddy.name}` // fin de la mise en page HTML dynamique
 
@@ -36,8 +38,6 @@ fetch(api)
             oursId.color = valeur_choisie;
         }
 
-
-
         let oursTab = [];
 
         var oursId = {
@@ -45,10 +45,10 @@ fetch(api)
             img: teddy.imageUrl,
             price: teddy.price / 100,
             id: teddy._id,
-            quantity: 1,
+            quantity: 1
         };
 
-        
+
 
         function add() {
             newOursId = true;
@@ -58,7 +58,6 @@ fetch(api)
             } else {
                 oursTab = JSON.parse(localStorage.getItem('ours'));
                 const selectColor = document.getElementById("couleur-choix").value;
-                console.log(selectColor);
                 oursTab.forEach((newOursTab) => {
                     // console.log(teddy._id +" === " + newOursTab.id +" && " + newOursTab.color +" == "+ selectColor);
                     if (teddy._id === newOursTab.id && newOursTab.color === selectColor) {
@@ -72,23 +71,21 @@ fetch(api)
         }
 
         const addArticle = document.getElementById("add-article");
+        const panierBis = document.getElementById("panierBis");
         addArticle.textContent = "ajouter au panier ";
 
-        var count = 0;
-
-        function countOurs() {
-            count++
+        window.alert = function (titre) {
+            document.getElementById('alertPanel').style.display = 'block';
+            document.getElementById('overlay').style.display = 'block';
         }
+
+        const retourCouleurs = document.getElementById("retouCouleurs");
+        retourCouleurs.setAttribute("href", "produits.html" + urlRecupId)
 
         addArticle.addEventListener('click', event => {
             change_valeur(oursId);
             add();
-            countOurs();
-            if (count === 1) {
-                addArticle.textContent = count + " article" + " ajouté au panier";
-            } else {
-                addArticle.textContent = count + " articles" + " ajoutés au panier";
-            }
+            alert();
         })
 
         const panier = document.getElementById("lien-panier");
@@ -100,9 +97,6 @@ fetch(api)
                 window.location = `panier.html`
             }
         })
-
-        const panierBis = document.getElementById("panierBis");
-
         if (localStorage.getItem("ours") != null) {
             panierBis.addEventListener("click", event => {
                 if (localStorage.getItem("ours") === null) {
@@ -111,9 +105,5 @@ fetch(api)
                     window.location = `panier.html`
                 }
             })
-        } else {
-            
-        }
-        
-        
+        } else {}
     })

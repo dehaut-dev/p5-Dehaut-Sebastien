@@ -5,7 +5,12 @@ fetch(api)
 
     .then(teddies => {
 
-
+        window.addEventListener('load', event => {
+            if (localStorage.getItem("ours") === null) {
+                localStorage.clear();
+                window.location = `panierVide.html`
+            }
+        })
 
         let retour = JSON.parse(localStorage.getItem('ours'));
         const fact = document.getElementById("table-p");
@@ -79,7 +84,6 @@ fetch(api)
 
         const validForm = document.getElementById("confirmercommande");
 
-
         let forms = document.getElementsByClassName('needs-validation');
         var validation = Array.prototype.filter.call(forms, function (form) {
             validForm.addEventListener('click', function (event) {
@@ -91,15 +95,6 @@ fetch(api)
                 addPanier(contact);
                 if (localStorage.getItem("products") != null && localStorage.getItem("ours") != null && localStorage.getItem("prixFinal") != null) {
                     validForm.innerHTML = `Veuillez patienter ....`
-                    /* if (!req.body.contact ||
-                        !req.body.contact.firstName ||
-                        !req.body.contact.lastName ||
-                        !req.body.contact.address ||
-                        !req.body.contact.city ||
-                        !req.body.contact.email ||
-                        !req.body.products) {
-                    } */
-
                     const data = {
                         contact: {
                             firstName: contact.prenom,
@@ -108,26 +103,28 @@ fetch(api)
                             city: contact.ville,
                             email: contact.email
                         },
-
                         products
                     }
                     console.log(contact);
                     console.log(products);
-                    // fetch post data => url 
-                    // const response = postData('POST', 'http://localhost:3000/api/teddy/order')
-                    // window.location = `validation.html`, ;
+                    (async () => {
+                        const Response = await fetch('http://localhost:3000/api/teddies/order', {
+                            method: 'POST',
+                            headers: {
+                                'Accept': 'application/json',
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(data)
+                        });
+                        const content = await Response.json();
 
-                    window.setTimeout(function () {
-                        window.location = `validation.html?id=&price=${prixFinaladd}&user=${prenom.value}`, localStorage.removeItem('ours')
-                    }, 2000)
+                        console.log(content);
+                        console.log(content.orderId);
+                        window.setTimeout(function () {
+                            window.location = `validation.html?id=${content.orderId}&price=${prixFinaladd}&user=${prenom.value}`, localStorage.removeItem('ours')
+                        }, 2000)
+                    })();
                 }
             }, false);
         });
-        window.addEventListener('load', event => {
-            if (localStorage.getItem("ours") === null) {
-                localStorage.clear();
-                window.location = `panierVide.html`
-            }
-        })
-
     })
