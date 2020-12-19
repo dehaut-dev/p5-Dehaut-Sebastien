@@ -16,7 +16,7 @@ fetch(api)
         // mise en place de la partie HTML dynamique
         container.innerHTML += `
                 <h1 class="text-center">${teddy.name}</h1>
-                <img class="col-md-auto center-block" width="auto" height="300" src="${teddy.imageUrl}"></img>
+                <img class="col-md-8 img-fluid" width="auto" height="300" src="${teddy.imageUrl}">
                 <p class="font-weight-bold h3">${(teddy.price/100).toFixed(2)} €</p>
                 <p class="h6">${teddy.description}</p>`
 
@@ -31,7 +31,14 @@ fetch(api)
             choix.innerHTML += `<option value="${retour}">${retour}</option>`
         }
 
-        function change_valeur(monObjet) {
+        function changeValeur(monObjet) {
+            select = document.getElementById("quantité");
+            choice = select.selectedIndex // Récupération de l'index du <option> choisi
+            valeur_choisie = select.options[choice].value;
+            oursId.quantity = parseInt(valeur_choisie);
+        }
+
+        function changeCouleur(monObjet) {
             select = document.getElementById("couleur-choix");
             choice = select.selectedIndex // Récupération de l'index du <option> choisi
             valeur_choisie = select.options[choice].value;
@@ -45,7 +52,6 @@ fetch(api)
             img: teddy.imageUrl,
             price: teddy.price / 100,
             id: teddy._id,
-            quantity: 1
         };
 
 
@@ -61,7 +67,8 @@ fetch(api)
                 oursTab.forEach((newOursTab) => {
                     // console.log(teddy._id +" === " + newOursTab.id +" && " + newOursTab.color +" == "+ selectColor);
                     if (teddy._id === newOursTab.id && newOursTab.color === selectColor) {
-                        newOursTab.quantity++;
+                        const quantité =  parseInt(document.getElementById("quantité").value);
+                        newOursTab.quantity += quantité;
                         newOursId = false;
                     }
                 })
@@ -71,7 +78,6 @@ fetch(api)
         }
 
         const addArticle = document.getElementById("add-article");
-        const panierBis = document.getElementById("panierBis");
         addArticle.textContent = "ajouter au panier ";
 
         window.alert = function (titre) {
@@ -83,7 +89,8 @@ fetch(api)
         retourCouleurs.setAttribute("href", "produits.html" + urlRecupId)
 
         addArticle.addEventListener('click', event => {
-            change_valeur(oursId);
+            changeCouleur(oursId);
+            changeValeur(oursId);
             add();
             alert();
         })
@@ -97,13 +104,4 @@ fetch(api)
                 window.location = `panier.html`
             }
         })
-        if (localStorage.getItem("ours") != null) {
-            panierBis.addEventListener("click", event => {
-                if (localStorage.getItem("ours") === null) {
-                    window.location = `panierVide.html`
-                } else {
-                    window.location = `panier.html`
-                }
-            })
-        } else {}
     })

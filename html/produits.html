@@ -31,7 +31,7 @@
                         </button>
                         <div id="navbarContent" class="collapse navbar-collapse">
                             <ul class="navbar-nav">
-                                <li class="nav-item active">
+                                <li>
                                     <a class="nav-link" href="index.html">Accueil</a>
                                 </li>
                                 <li>
@@ -42,8 +42,7 @@
                                         aria-haspopup="true" aria-expanded="false" class="nav-link" href="#"><i
                                             class="fas fa-shopping-basket"></i></a>
                                     <div class="btn-group" id="refresh">
-                                        <div class="dropdown-menu dropdown-menu-right bg-dark text-light px-4 py-3"
-                                            id="dropdown">
+                                        <div class="dropdown-menu dropdown-menu-right bg-dark bg-gradient-dark text-light mt-4 px-4 py-3 border border-white" id="dropdown">
                                             <h3 class="text-center">Total</h3>
                                             <table class="table border text-light table-sm" id="table">
                                                 <thead>
@@ -67,7 +66,7 @@
                                                     </tr>
                                                 </tbody>
                                             </table>
-                                            <button class="btn btn-danger col-md-12" href="panier.html">Panier</button>
+                                            <a class="btn btn-danger col-md-12" href="./panier.html">Panier</a>
                                         </div>
                                     </div>
 
@@ -81,12 +80,12 @@
     </div>
     <div class="container-fluid">
         <div class="row justify-content-center">
-            <div class="col-md-7">
+            <div class="col-md-4 jumbotron-fluid" >
                 <alert>
                     <div id="overlay"></div>
                     <div id="alertPanel">
                         <h3 class="py-4 text-center h4">Votre article a bien été ajouté au panier</h3>
-                        <div class="texte text-center">
+                        <div class="text-center py-0">
                             <a class="bouton btn btn-danger my-2 mr-3" href="panier.html">finaliser ma commande</a>
                             <a class="bouton btn btn-danger my-2" href="index.html">Continuer mes achats</a><br>
                             <a class="bouton btn btn-danger my-2" id="retouCouleurs">Choisir une autre couleur</a>
@@ -103,14 +102,15 @@
         <div class="row">
             <div class="col">
                 <div class="text-center mt-5">
-                    <h2 id="title-secondary" class="mb-4">Fiche article de </h2>
+                    <h2 id="title-secondary" class="">Fiche article de </h2>
+                    <img src="../images/tenor (1).gif" alt="ours qui marche" class="col-md-1">
                 </div>
             </div>
         </div>
     </div>
 
     <div class="container text-center mb-3">
-        <label for="couleur-choix" href="" class="h4">Choix de la couleur</label><br>
+        <label for="couleur-choix" href="" class="h4 mb-4">Choix de la couleur</label><br>
         <select name="" id="couleur-choix" class="btn btn-light border btn-sm active" aria-pressed="true">
         </select>
     </div>
