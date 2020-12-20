@@ -9,8 +9,6 @@ fetch(api)
 
     .then(teddy => {
 
-
-
         const container = document.getElementById("fiche-article");
         const titleSecondary = document.getElementById("title-secondary");
         // mise en place de la partie HTML dynamique
@@ -53,8 +51,6 @@ fetch(api)
             price: teddy.price / 100,
             id: teddy._id,
         };
-
-
 
         function add() {
             newOursId = true;

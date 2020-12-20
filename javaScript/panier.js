@@ -1,33 +1,44 @@
 const api = "http://localhost:3000/api/teddies/";
 
+
+window.addEventListener('load', event => {
+    retour = JSON.parse(localStorage.getItem('ours'));
+    if (localStorage.getItem("ours") === null) {
+        localStorage.clear();
+        window.location = `panierVide.html`
+    }
+    if(retour.length === 0){
+        localStorage.clear();
+        window.location = `panierVide.html`
+    }
+})
+
+
+
+
 fetch(api)
     .then(response => response.json())
-
     .then(teddies => {
 
-        window.addEventListener('load', event => {
-            if (localStorage.getItem("ours") === null) {
-                localStorage.clear();
-                window.location = `panierVide.html`
-            }
-        })
-
-        let retour = JSON.parse(localStorage.getItem('ours'));
+        let retour = JSON.parse(localStorage.getItem('ours'));    
         const fact = document.getElementById("table-p");
 
         var prixTotal = [];
         var products = [];
 
-
+     
 
         for (let i = 0; i < retour.length; i++) {
 
             let p = retour[i];
+            retourTest = JSON.parse(localStorage.getItem('ours'));
+            console.log(p);
 
             fact.innerHTML += `
             <tbody>
                 <tr>
-                    <td class="border" scope="row"><a class="mr-0" href="produits.html?produit=${p["id"]}"><img width="60" height="auto" src="${p["img"]}"> </a>${p["name"]}</td>
+                    <td class="border" scope="row"><a class="mr-0" href="produits.html?produit=${p["id"]}"><img class="float-left" width="60" height="auto" src="${p["img"]}"> 
+                    </a><p>${p["name"]}<a href="panier.html"><i class="far fa-trash-alt float-right pr-4 mt-2" value="${i}" onclick="retourTest = JSON.parse(localStorage.getItem('ours'));retourTest.splice(${i},1);localStorage.setItem('ours', JSON.stringify(retourTest));"></i></a></p></td>
                     <td class="border" scope="row">${p["color"]}</td>
                     <td class="border">${p["price"].toFixed(2)} €</td>
                     <td class="border">${p["quantity"]}</td>
@@ -40,11 +51,10 @@ fetch(api)
 
             products.push(p["id"]);
 
-        }
+            console.log(i);
 
-        // 
-
-        console.log(products);
+            
+        }       
 
         const prixFinal = document.getElementById("prix-final")
         const reducer = (accumulator, currentValue) => accumulator + currentValue;
@@ -84,7 +94,7 @@ fetch(api)
 
         const validForm = document.getElementById("confirmercommande");
 
-        let forms = document.getElementsByClassName('needs-validation');
+        const forms = document.getElementsByClassName('needs-validation');
         var validation = Array.prototype.filter.call(forms, function (form) {
             validForm.addEventListener('click', function (event) {
                 if (form.checkValidity() === false) {
@@ -128,3 +138,5 @@ fetch(api)
             }, false);
         });
     })
+
+   
