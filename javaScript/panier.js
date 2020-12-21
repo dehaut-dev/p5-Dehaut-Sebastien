@@ -1,21 +1,5 @@
 const api = "http://localhost:3000/api/teddies/";
 
-
-window.addEventListener('load', event => {
-    retour = JSON.parse(localStorage.getItem('ours'));
-    if (localStorage.getItem("ours") === null) {
-        localStorage.clear();
-        window.location = `panierVide.html`
-    }
-    if(retour.length === 0){
-        localStorage.clear();
-        window.location = `panierVide.html`
-    }
-})
-
-
-
-
 fetch(api)
     .then(response => response.json())
     .then(teddies => {
@@ -131,12 +115,12 @@ fetch(api)
                         console.log(content);
                         console.log(content.orderId);
                         window.setTimeout(function () {
-                            window.location = `validation.html?id=${content.orderId}&price=${prixFinaladd}&user=${prenom.value}`, localStorage.removeItem('ours')
+                            window.location = `validation.html?id=${content.orderId}&price=${prixFinaladd}&user=${prenom.value}`, localStorage.removeItem('ours');
+                            localStorage.clear();
                         }, 2000)
                     })();
                 }
             }, false);
         });
     })
-
    

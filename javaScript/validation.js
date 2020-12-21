@@ -4,12 +4,6 @@ const idRecup = searchParams.getAll("id");
 const userRecup = searchParams.getAll("user");
 const priceRecup = searchParams.getAll("price");
 
-console.log(idRecup);
-console.log(userRecup);
-console.log(priceRecup);
-console.log(typeof (priceRecup));
-
-
 const pseudo = document.getElementById("pseudo");
 const prix = document.getElementById("prix");
 const boutonRetour = document.getElementById("bouton-retour");

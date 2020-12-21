@@ -1,5 +1,4 @@
 const urlRecupId = window.location.search;
-console.log(urlRecupId);
 var searchParams = new URLSearchParams(urlRecupId);
 const urlRecup = searchParams.getAll("produit");
 const api = "http://localhost:3000/api/teddies/" + urlRecup;
@@ -61,9 +60,8 @@ fetch(api)
                 oursTab = JSON.parse(localStorage.getItem('ours'));
                 const selectColor = document.getElementById("couleur-choix").value;
                 oursTab.forEach((newOursTab) => {
-                    // console.log(teddy._id +" === " + newOursTab.id +" && " + newOursTab.color +" == "+ selectColor);
                     if (teddy._id === newOursTab.id && newOursTab.color === selectColor) {
-                        const quantité =  parseInt(document.getElementById("quantité").value);
+                        const quantité = parseInt(document.getElementById("quantité").value);
                         newOursTab.quantity += quantité;
                         newOursId = false;
                     }
