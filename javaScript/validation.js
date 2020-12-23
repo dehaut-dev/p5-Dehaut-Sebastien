@@ -1,5 +1,5 @@
 const urlRecupId = window.location.search;
-var searchParams = new URLSearchParams(urlRecupId);
+let searchParams = new URLSearchParams(urlRecupId);
 const idRecup = searchParams.getAll("id");
 const userRecup = searchParams.getAll("user");
 const priceRecup = searchParams.getAll("price");

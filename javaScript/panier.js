@@ -1,45 +1,48 @@
 const api = "http://localhost:3000/api/teddies/";
 
+const retour = JSON.parse(localStorage.getItem('ours'));
+const prenomId = document.getElementById("prenom");
+const nomId = document.getElementById("nom");
+const adresseId = document.getElementById("adresse");
+const villeId = document.getElementById("ville");
+const emailId = document.getElementById("email");
+const fact = document.getElementById("table-p");
+const contact = {};
+
+function deleteItem(i) {
+    retour.splice(i,1);
+    localStorage.setItem('ours', JSON.stringify(retour));
+    window.location.href = retour.length > 0 ? "panier.html" : "index.html";
+    return
+}
+
+function generateLine (p, i){
+    return `
+        <tr>
+            <td class="border" scope="row"><a class="mr-0" href="produits.html?produit=${p["id"]}"><img class="float-left" width="60" height="auto" src="${p["img"]}"> 
+            </a><p>${p["name"]}<a href="#"><i class="far fa-trash-alt float-right pr-4 mt-2" value="${i}" onclick="deleteItem(${i})"></i></a></p></td>
+            <td class="border" scope="row">${p["color"]}</td>
+            <td class="border">${p["price"].toFixed(2)} €</td>
+            <td class="border">${p["quantity"]}</td>
+            <td class""prix>${((p["price"])*(p["quantity"])).toFixed(2)} €</td>
+        </tr>`
+}
+
+
 fetch(api)
     .then(response => response.json())
     .then(teddies => {
-
-        let retour = JSON.parse(localStorage.getItem('ours'));    
-        const fact = document.getElementById("table-p");
-
-        var prixTotal = [];
-        var products = [];
-
-     
+        let prixTotal = [];
+        let products = [];
 
         for (let i = 0; i < retour.length; i++) {
-
             let p = retour[i];
-            retourTest = JSON.parse(localStorage.getItem('ours'));
-            console.log(p);
-
-            fact.innerHTML += `
-            <tbody>
-                <tr>
-                    <td class="border" scope="row"><a class="mr-0" href="produits.html?produit=${p["id"]}"><img class="float-left" width="60" height="auto" src="${p["img"]}"> 
-                    </a><p>${p["name"]}<a href="panier.html"><i class="far fa-trash-alt float-right pr-4 mt-2" value="${i}" onclick="retourTest = JSON.parse(localStorage.getItem('ours'));retourTest.splice(${i},1);localStorage.setItem('ours', JSON.stringify(retourTest));"></i></a></p></td>
-                    <td class="border" scope="row">${p["color"]}</td>
-                    <td class="border">${p["price"].toFixed(2)} €</td>
-                    <td class="border">${p["quantity"]}</td>
-                    <td class""prix>${((p["price"])*(p["quantity"])).toFixed(2)} €</td>
-                </tr>
-            </tbody>    `
+            fact.innerHTML += generateLine(p,i);
             prixGlobal = (p["price"]) * (p["quantity"]);
-
             prixTotal.push(prixGlobal);
-
             products.push(p["id"]);
-
-            console.log(i);
-
-            
-        }       
-
+        }     
+        
         const prixFinal = document.getElementById("prix-final")
         const reducer = (accumulator, currentValue) => accumulator + currentValue;
 
@@ -54,15 +57,7 @@ fetch(api)
             window.location = `panierVide.html`
         })
 
-        const contact = {};
-        const facture = {};
-
         function addPanier(object) {
-            prenomId = document.getElementById("prenom");
-            nomId = document.getElementById("nom");
-            adresseId = document.getElementById("adresse");
-            villeId = document.getElementById("ville");
-            emailId = document.getElementById("email");
             contact.prenom = prenomId.value;
             contact.nom = nomId.value;
             contact.adresse = adresseId.value;
@@ -70,16 +65,13 @@ fetch(api)
             contact.email = emailId.value;
             if (contact.prenom != "" && contact.nom != "" && contact.adresse != "" && contact.ville != "" && contact.email != "") {
                 localStorage.setItem('products', JSON.stringify(contact));
-                facture.prixFinal = prixFinaladd;
-                facture.id = retour.id;
-                localStorage.setItem('prixFinal', JSON.stringify(facture));
             }
         }
 
         const validForm = document.getElementById("confirmercommande");
 
         const forms = document.getElementsByClassName('needs-validation');
-        var validation = Array.prototype.filter.call(forms, function (form) {
+        let validation = Array.prototype.filter.call(forms, function (form) {
             validForm.addEventListener('click', function (event) {
                 if (form.checkValidity() === false) {
                     event.preventDefault();
@@ -87,7 +79,7 @@ fetch(api)
                 }
                 form.classList.add('was-validated');
                 addPanier(contact);
-                if (localStorage.getItem("products") != null && localStorage.getItem("ours") != null && localStorage.getItem("prixFinal") != null) {
+                if (localStorage.getItem("products") != null && localStorage.getItem("ours") != null) {
                     validForm.innerHTML = `Veuillez patienter ....`
                     const data = {
                         contact: {
@@ -98,9 +90,7 @@ fetch(api)
                             email: contact.email
                         },
                         products
-                    }
-                    console.log(contact);
-                    console.log(products);
+                    };
                     (async () => {
                         const Response = await fetch('http://localhost:3000/api/teddies/order', {
                             method: 'POST',
@@ -111,9 +101,6 @@ fetch(api)
                             body: JSON.stringify(data)
                         });
                         const content = await Response.json();
-
-                        console.log(content);
-                        console.log(content.orderId);
                         window.setTimeout(function () {
                             window.location = `validation.html?id=${content.orderId}&price=${prixFinaladd}&user=${prenom.value}`, localStorage.removeItem('ours');
                             localStorage.clear();
