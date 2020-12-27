@@ -12,9 +12,17 @@ const contact = {};
 function deleteItem(i) {
     retour.splice(i,1);
     localStorage.setItem('ours', JSON.stringify(retour));
-    window.location.href = retour.length > 0 ? "panier.html" : "index.html";
+    if (retour.length > 1) {
+        window.location = "panier.html";
+    }else{
+        window.location = "index.html";
+        localStorage.clear()
+    }
+    // window.location.href = retour.length > 1 ? "panier.html" : "index.html";
     return
 }
+
+console.log(JSON.parse(localStorage.getItem('ours')).length);
 
 function generateLine (p, i){
     return `
@@ -76,38 +84,40 @@ fetch(api)
                 if (form.checkValidity() === false) {
                     event.preventDefault();
                     event.stopPropagation();
-                }
-                form.classList.add('was-validated');
-                addPanier(contact);
-                if (localStorage.getItem("products") != null && localStorage.getItem("ours") != null) {
-                    validForm.innerHTML = `Veuillez patienter ....`
-                    const data = {
-                        contact: {
-                            firstName: contact.prenom,
-                            lastName: contact.nom,
-                            address: contact.adresse,
-                            city: contact.ville,
-                            email: contact.email
-                        },
-                        products
-                    };
-                    (async () => {
-                        const Response = await fetch('http://localhost:3000/api/teddies/order', {
-                            method: 'POST',
-                            headers: {
-                                'Accept': 'application/json',
-                                'Content-Type': 'application/json'
+                }else{
+                    
+                    addPanier(contact);
+                    if (localStorage.getItem("products") != null && localStorage.getItem("ours") != null) {
+                        validForm.innerHTML = `Veuillez patienter ....`
+                        const data = {
+                            contact: {
+                                firstName: contact.prenom,
+                                lastName: contact.nom,
+                                address: contact.adresse,
+                                city: contact.ville,
+                                email: contact.email
                             },
-                            body: JSON.stringify(data)
-                        });
-                        const content = await Response.json();
-                        window.setTimeout(function () {
-                            window.location = `validation.html?id=${content.orderId}&price=${prixFinaladd}&user=${prenom.value}`, localStorage.removeItem('ours');
-                            localStorage.clear();
-                        }, 2000)
-                    })();
-                }
+                            products
+                        };
+                        (async () => {
+                            const Response = await fetch('http://localhost:3000/api/teddies/order', {
+                                method: 'POST',
+                                headers: {
+                                    'Accept': 'application/json',
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify(data)
+                            });
+                            const content = await Response.json();
+                            window.setTimeout(function () {
+                                window.location = `validation.html?id=${content.orderId}&price=${prixFinaladd}&user=${prenom.value}`, localStorage.removeItem('ours');
+                                localStorage.clear();
+                            }, 2000)
+                        })();
+                    }
+                }form.classList.add('was-validated');
+                
             }, false);
-        });
+        });false
     })
    

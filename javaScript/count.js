@@ -27,19 +27,19 @@ function notGenerate (){
     </div>`
 }
 
-// if (localStorage.getItem("ours") != null) {
-//     for (let i = 0; i < retour.length; i++) {
-//         let p = retour[i];
-//         fact.innerHTML += generateLineUp (p);
-//         prixGlobal = (p["price"]) * (p["quantity"]);
-//         prixTotal.push(prixGlobal);
-//         products.push(p["id"]);
-//     }
-//     let prixFinaladd = prixTotal.reduce(reducer);
+if (localStorage.getItem("ours") != null) {
+    for (let i = 0; i < retour.length; i++) {
+        let p = retour[i];
+        fact.innerHTML += generateLineUp (p);
+        prixGlobal = (p["price"]) * (p["quantity"]);
+        prixTotal.push(prixGlobal);
+        products.push(p["id"]);
+    }
+    let prixFinaladd = prixTotal.reduce(reducer);
 
-//     prixFinal.innerHTML +=
-//         `${(prixFinaladd).toFixed(2)}€`
+    prixFinal.innerHTML +=
+        `${(prixFinaladd).toFixed(2)}€`
 
-// } else {
-//     droop.innerHTML = notGenerate ();
-// }
+} else {
+    droop.innerHTML = notGenerate ();
+}
