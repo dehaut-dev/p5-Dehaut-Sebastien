@@ -12,7 +12,7 @@ const contact = {};
 function deleteItem(i) {
     retour.splice(i,1);
     localStorage.setItem('ours', JSON.stringify(retour));
-    if (retour.length > 1) {
+    if (retour.length > 0) {
         window.location = "panier.html";
     }else{
         window.location = "index.html";
@@ -22,13 +22,11 @@ function deleteItem(i) {
     return
 }
 
-console.log(JSON.parse(localStorage.getItem('ours')).length);
-
 function generateLine (p, i){
     return `
         <tr>
             <td class="border" scope="row"><a class="mr-0" href="produits.html?produit=${p["id"]}"><img class="float-left" width="60" height="auto" src="${p["img"]}"> 
-            </a><p>${p["name"]}<a href="#"><i class="far fa-trash-alt float-right pr-4 mt-2" value="${i}" onclick="deleteItem(${i})"></i></a></p></td>
+            </a><p>${p["name"]}<a href="#"><i class="far fa-trash-alt float-right pr-4 mt-2" onclick="deleteItem(${i})"></i></a></p></td>
             <td class="border" scope="row">${p["color"]}</td>
             <td class="border">${p["price"].toFixed(2)} €</td>
             <td class="border">${p["quantity"]}</td>

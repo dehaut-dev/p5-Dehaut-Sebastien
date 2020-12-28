@@ -10,7 +10,7 @@ function verifPanier (){
     }
 }
 
-function generateLine (teddy){
+function generateLine (teddy){                          // creation des div pour les differents teddies
     return `
     <div class="col-md-5 text-center mt-5 border">
         <h1>${teddy.name}</h1>
@@ -27,7 +27,7 @@ fetch(api)
             for (const teddy of teddies) { // création du le HTML pour chaque teddies present 
                 container.innerHTML += generateLine (teddy);   
             }
-            panier.addEventListener("click", event => {                 // verification du panier 
-                verifPanier ()
-            })  
     })
+    panier.addEventListener("click", event => {                 // verification du panier 
+        verifPanier ()
+    }) 

@@ -6,22 +6,22 @@ const choix = document.getElementById("couleur-choix");
 const addArticle = document.getElementById("add-article");
 const retourCouleurs = document.getElementById("retouCouleurs");
 
-function recuperationUrl() {
+function recuperationUrl() {                                // recuperation de l'url de la page 
     let searchParams = new URLSearchParams(urlRecupId);
     const urlRecup = searchParams.getAll("produit");
-    api = "http://localhost:3000/api/teddies/" + urlRecup;    
+    api = "http://localhost:3000/api/teddies/" + urlRecup;    // recuperation de l'api du produit selectionner 
 }
 recuperationUrl();
 
-function verifPanier() {
+function verifPanier() {                                        // fonction de verification de panier
     if (localStorage.getItem("ours") === null) {
-        window.location = `panierVide.html`
+        window.location = `panierVide.html`                     // renvoi sur la page paniervide.html si le local storage ne contien rien
     } else {
         window.location = `panier.html`
     }
 }
 
-function generateLine (teddy){
+function generateLine (teddy){                                  // creation des div pour le teddy selectionné
     return `
     <h1 class="text-center">${teddy.name}</h1>
     <img class="col-md-8 img-fluid" width="auto" height="300" src="${teddy.imageUrl}">
@@ -33,48 +33,47 @@ fetch(api)
     .then(response => response.json())
 
     .then(teddy => {
-        // mise en place de la partie HTML dynamique
-        container.innerHTML += generateLine (teddy);
+        
+        container.innerHTML += generateLine (teddy);                // mise en place de la partie HTML dynamique
 
         titleSecondary.innerHTML += `${teddy.name}` // fin de la mise en page HTML dynamique
 
         const listOurs = teddy.colors;
 
-
-        for (let i = 0; i < listOurs.length; i++) {
+        for (let i = 0; i < listOurs.length; i++) {                     // generation d'une option pour chaque couleur presente sur le seveur
             let retour = listOurs[0 + i];
             choix.innerHTML += `<option value="${retour}">${retour}</option>`
         }
         
-        let oursTab = [];
+        let oursTab = [];                                   // tableau ours 
 
-        let oursId = {
+        let oursId = {                                      // object oursId qui sera push dans le oursTab 
             name: teddy.name,
             img: teddy.imageUrl,
             price: teddy.price / 100,
             id: teddy._id,
         };
 
-        function changeValeur(monObjet) {
+        function changeValeur(monObjet) {                      // changement de la valeur de la quantité selectionné
             select = document.getElementById("quantité");
             choice = select.selectedIndex // Récupération de l'index du <option> choisi
             valeur_choisie = select.options[choice].value;
             oursId.quantity = parseInt(valeur_choisie);
         }
         
-        function changeCouleur(monObjet) {
+        function changeCouleur(monObjet) {                  // changement de la valeur de la couleur selectionné 
             select = document.getElementById("couleur-choix");
             choice = select.selectedIndex // Récupération de l'index du <option> choisi
             valeur_choisie = select.options[choice].value;
             oursId.color = valeur_choisie;
         }
 
-        function add() {
+        function add() {                                    // ajout au panier 
             newOursId = true;
-            if (localStorage.getItem("ours") === null) {
+            if (localStorage.getItem("ours") === null) {            // si panier vide 
                 oursTab.push(oursId);
-                localStorage.setItem("ours", JSON.stringify(oursTab));
-            } else {
+                localStorage.setItem("ours", JSON.stringify(oursTab));         // stock l'article dans le localStorage
+            } else {                                                        // sinon crée un nouvelle article si couleur ou Id different 
                 oursTab = JSON.parse(localStorage.getItem('ours'));
                 const selectColor = document.getElementById("couleur-choix").value;
                 oursTab.forEach((newOursTab) => {
@@ -85,31 +84,25 @@ fetch(api)
                     }
                 })
                 if (newOursId) oursTab.push(oursId);
-                localStorage.setItem('ours', JSON.stringify(oursTab))
+                localStorage.setItem('ours', JSON.stringify(oursTab))               // stock le nouvelle article dans le localStorage
             }
         }
 
-        
-        addArticle.textContent = "ajouter au panier ";
-
-        window.alert = function (titre) {
+        window.alert = function (titre) {                                           // fonction alert a l'ajout dans le panier 
             document.getElementById('alertPanel').style.display = 'block';
             document.getElementById('overlay').style.display = 'block';
         }
 
-       
-        retourCouleurs.setAttribute("href", "produits.html" + urlRecupId)
+        retourCouleurs.setAttribute("href", "produits.html" + urlRecupId)          
 
-        addArticle.addEventListener('click', event => {
+        addArticle.addEventListener('click', event => {                             // activation des fonctions au click d'ajout au panier
             changeCouleur(oursId);
             changeValeur(oursId);
             add();
             alert();
         })
 
-       
-
-        panier.addEventListener("click", event => {
+        panier.addEventListener("click", event => {                                 // activation de la fonctions verifPanier au click sur la bouton panier
             verifPanier()
         })
     })
