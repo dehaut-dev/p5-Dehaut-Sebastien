@@ -10,7 +10,6 @@ function recuperationUrl() {                                // recuperation de l
     let searchParams = new URLSearchParams(urlRecupId);
     const urlRecup = searchParams.getAll("produit");
     api = "http://localhost:3000/api/teddies/" + urlRecup;
-    return api    // recuperation de l'api du produit selectionner 
 }
 recuperationUrl();
 
