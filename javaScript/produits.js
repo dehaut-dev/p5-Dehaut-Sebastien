@@ -9,15 +9,18 @@ const retourCouleurs = document.getElementById("retouCouleurs");
 function recuperationUrl() {                                // recuperation de l'url de la page 
     let searchParams = new URLSearchParams(urlRecupId);
     const urlRecup = searchParams.getAll("produit");
-    api = "http://localhost:3000/api/teddies/" + urlRecup;    // recuperation de l'api du produit selectionner 
+    api = "http://localhost:3000/api/teddies/" + urlRecup;
+    return api    // recuperation de l'api du produit selectionner 
 }
 recuperationUrl();
 
 function verifPanier() {                                        // fonction de verification de panier
     if (localStorage.getItem("ours") === null) {
         window.location = `panierVide.html`                     // renvoi sur la page paniervide.html si le local storage ne contien rien
+        return false
     } else {
         window.location = `panier.html`
+        return true
     }
 }
 

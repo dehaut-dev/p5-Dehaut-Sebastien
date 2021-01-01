@@ -9,20 +9,20 @@ const emailId = document.getElementById("email");
 const fact = document.getElementById("table-p");
 const contact = {};
 
-function deleteItem(i) {
+function deleteItem(i) {    // fonction de supression de l'article dans le panier
     retour.splice(i,1);
     localStorage.setItem('ours', JSON.stringify(retour));
     if (retour.length > 0) {
         window.location = "panier.html";
     }else{
-        window.location = "index.html";
+        window.location = "index.html";     // si le panier est vide redirige vers la page index.html
         localStorage.clear()
     }
     // window.location.href = retour.length > 1 ? "panier.html" : "index.html";
     return
 }
 
-function generateLine (p, i){
+function generateLine (p, i){                  
     return `
         <tr>
             <td class="border" scope="row"><a class="mr-0" href="produits.html?produit=${p["id"]}"><img class="float-left" width="60" height="auto" src="${p["img"]}"> 
@@ -41,12 +41,12 @@ fetch(api)
         let prixTotal = [];
         let products = [];
 
-        for (let i = 0; i < retour.length; i++) {
+        for (let i = 0; i < retour.length; i++) {             //  pour chaque teddy present dans le local crée une ligne dans le tableau
             let p = retour[i];
             fact.innerHTML += generateLine(p,i);
-            prixGlobal = (p["price"]) * (p["quantity"]);
-            prixTotal.push(prixGlobal);
-            products.push(p["id"]);
+            prixGlobal = (p["price"]) * (p["quantity"]);        // multiplie la quantité par le prix 
+            prixTotal.push(prixGlobal);                         // affiche le prix global des teddies
+            products.push(p["id"]);                             // push l'Id dans products
         }     
         
         const prixFinal = document.getElementById("prix-final")
@@ -58,12 +58,12 @@ fetch(api)
             `${(prixFinaladd).toFixed(2)} €`
 
         const supArticle = document.getElementById("sup-article");
-        supArticle.addEventListener('click', event => {
+        supArticle.addEventListener('click', event => {                     // supression total du panier lors du click 
             localStorage.clear();
             window.location = `panierVide.html`
         })
 
-        function addPanier(object) {
+        function addPanier(object) {                                    // 
             contact.prenom = prenomId.value;
             contact.nom = nomId.value;
             contact.adresse = adresseId.value;
@@ -101,12 +101,13 @@ fetch(api)
                             const Response = await fetch('http://localhost:3000/api/teddies/order', {
                                 method: 'POST',
                                 headers: {
-                                    'Accept': 'application/json',
                                     'Content-Type': 'application/json'
                                 },
                                 body: JSON.stringify(data)
                             });
                             const content = await Response.json();
+                            console.log(content);
+                            console.log(Response);
                             window.setTimeout(function () {
                                 window.location = `validation.html?id=${content.orderId}&price=${prixFinaladd}&user=${prenom.value}`, localStorage.removeItem('ours');
                                 localStorage.clear();
