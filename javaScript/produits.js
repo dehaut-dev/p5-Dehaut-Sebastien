@@ -1,27 +1,16 @@
-const urlRecupId = window.location.search;
-const panier = document.getElementById("lien-panier");
+const urlRecupId = window.location.search;   // recuperation de l'url de la page 
 const container = document.getElementById("fiche-article");
 const titleSecondary = document.getElementById("title-secondary");
 const choix = document.getElementById("couleur-choix");
 const addArticle = document.getElementById("add-article");
 const retourCouleurs = document.getElementById("retouCouleurs");
 
-function recuperationUrl() {                                // recuperation de l'url de la page 
+function recuperationUrl() {                
     let searchParams = new URLSearchParams(urlRecupId);
     const urlRecup = searchParams.getAll("produit");
     api = "http://localhost:3000/api/teddies/" + urlRecup;
 }
 recuperationUrl();
-
-function verifPanier() {                                        // fonction de verification de panier
-    if (localStorage.getItem("ours") === null) {
-        window.location = `panierVide.html`                     // renvoi sur la page paniervide.html si le local storage ne contien rien
-        return false
-    } else {
-        window.location = `panier.html`
-        return true
-    }
-}
 
 function generateLine (teddy){                                  // creation des div pour le teddy selectionné
     return `
@@ -33,7 +22,6 @@ function generateLine (teddy){                                  // creation des 
 
 fetch(api)
     .then(response => response.json())
-
     .then(teddy => {
         
         container.innerHTML += generateLine (teddy);                // mise en place de la partie HTML dynamique
@@ -58,7 +46,7 @@ fetch(api)
 
         function changeValeur(monObjet) {                      // changement de la valeur de la quantité selectionné
             select = document.getElementById("quantité");
-            choice = select.selectedIndex // Récupération de l'index du <option> choisi
+            choice = select.selectedIndex                       // Récupération de l'index du <option> choisi
             valeur_choisie = select.options[choice].value;
             oursId.quantity = parseInt(valeur_choisie);
         }
@@ -102,9 +90,5 @@ fetch(api)
             changeValeur(oursId);
             add();
             alert();
-        })
-
-        panier.addEventListener("click", event => {                                 // activation de la fonctions verifPanier au click sur la bouton panier
-            verifPanier()
         })
     })

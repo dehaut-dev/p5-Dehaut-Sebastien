@@ -1,5 +1,3 @@
-const api = "http://localhost:3000/api/teddies/";
-
 const retour = JSON.parse(localStorage.getItem('ours'));
 const prenomId = document.getElementById("prenom");
 const nomId = document.getElementById("nom");
@@ -9,20 +7,24 @@ const emailId = document.getElementById("email");
 const fact = document.getElementById("table-p");
 const contact = {};
 
-function deleteItem(i) {    // fonction de supression de l'article dans le panier
-    retour.splice(i,1);
+if (localStorage.getItem("ours") === null) {            
+    window.location = `index.html`                 // redirection sur panier vide en cas de valeur null sur l'item ours du local-storage
+}
+
+function deleteItem(i) { // fonction de supression de l'article dans le panier
+    retour.splice(i, 1);
     localStorage.setItem('ours', JSON.stringify(retour));
     if (retour.length > 0) {
         window.location = "panier.html";
-    }else{
-        window.location = "index.html";     // si le panier est vide redirige vers la page index.html
+    } else {
+        window.location = "index.html"; // si le panier est vide redirige vers la page index.html
         localStorage.clear()
     }
     // window.location.href = retour.length > 1 ? "panier.html" : "index.html";
     return
 }
 
-function generateLine (p, i){                  
+function generateLine(p, i) {
     return `
         <tr>
             <td class="border" scope="row"><a class="mr-0" href="produits.html?produit=${p["id"]}"><img class="float-left" width="60" height="auto" src="${p["img"]}"> 
@@ -34,21 +36,20 @@ function generateLine (p, i){
         </tr>`
 }
 
-
-fetch(api)
+fetch("http://localhost:3000/api/teddies/")
     .then(response => response.json())
     .then(teddies => {
         let prixTotal = [];
         let products = [];
 
-        for (let i = 0; i < retour.length; i++) {             //  pour chaque teddy present dans le local crée une ligne dans le tableau
+        for (let i = 0; i < retour.length; i++) { 
             let p = retour[i];
-            fact.innerHTML += generateLine(p,i);
-            prixGlobal = (p["price"]) * (p["quantity"]);        // multiplie la quantité par le prix 
-            prixTotal.push(prixGlobal);                         // affiche le prix global des teddies
-            products.push(p["id"]);                             // push l'Id dans products
-        }     
-        
+            fact.innerHTML += generateLine(p, i);           //  pour chaque teddy present dans le local crée une ligne dans le tableau
+            prixGlobal = (p["price"]) * (p["quantity"]);    // multiplie la quantité par le prix 
+            prixTotal.push(prixGlobal);                     // affiche le prix global des teddies
+            products.push(p["id"]);                         // push l'Id dans products
+        }
+
         const prixFinal = document.getElementById("prix-final")
         const reducer = (accumulator, currentValue) => accumulator + currentValue;
 
@@ -58,12 +59,12 @@ fetch(api)
             `${(prixFinaladd).toFixed(2)} €`
 
         const supArticle = document.getElementById("sup-article");
-        supArticle.addEventListener('click', event => {                     // supression total du panier lors du click 
+        supArticle.addEventListener('click', event => {     // supression total du panier lors du click 
             localStorage.clear();
             window.location = `panierVide.html`
         })
 
-        function addPanier(object) {                                    // 
+        function addPanier(object) {                        //   stock les information du formulaire dans contact
             contact.prenom = prenomId.value;
             contact.nom = nomId.value;
             contact.adresse = adresseId.value;
@@ -75,16 +76,14 @@ fetch(api)
         }
 
         const validForm = document.getElementById("confirmercommande");
-
         const forms = document.getElementsByClassName('needs-validation');
         let validation = Array.prototype.filter.call(forms, function (form) {
             validForm.addEventListener('click', function (event) {
                 if (form.checkValidity() === false) {
                     event.preventDefault();
                     event.stopPropagation();
-                }else{
-                    
-                    addPanier(contact);
+                } else {
+                    addPanier();
                     if (localStorage.getItem("products") != null && localStorage.getItem("ours") != null) {
                         validForm.innerHTML = `Veuillez patienter ....`
                         const data = {
@@ -114,9 +113,10 @@ fetch(api)
                             }, 2000)
                         })();
                     }
-                }form.classList.add('was-validated');
-                
+                }
+                form.classList.add('was-validated');
+
             }, false);
-        });false
+        });
+        false
     })
-   

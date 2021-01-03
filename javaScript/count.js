@@ -3,7 +3,7 @@ const fact = document.getElementById("table-p");
 const droop = document.getElementById("dropdown");
 const prixFinal = document.getElementById("prix-final");
 const reducer = (accumulator, currentValue) => accumulator + currentValue;
-
+const panier = document.getElementById("lien-panier"); 
 
 var prixTotal = [];
 var products = [];
@@ -43,3 +43,15 @@ if (localStorage.getItem("ours") != null) {
 } else {
     droop.innerHTML = notGenerate ();
 }
+
+function verifPanier (){
+    if (localStorage.getItem("ours") === null) {            
+        window.location = `panierVide.html`                 // redirection sur panier vide en cas de valeur null sur l'item ours du local-storage
+    } else {
+        window.location = `panier.html`                     // sinon envoi du lien panier.html
+    }
+}
+
+panier.addEventListener("click", event => {                 // verification du panier 
+    verifPanier ()
+})
