@@ -7,8 +7,8 @@ const emailId = document.getElementById("email");
 const fact = document.getElementById("table-p");
 const contact = {};
 
-if (localStorage.getItem("ours") === null) {            
-    window.location = `index.html`                 // redirection sur panier vide en cas de valeur null sur l'item ours du local-storage
+if (localStorage.getItem("ours") === null) {
+    window.location = `index.html` // redirection sur panier vide en cas de valeur null sur l'item ours du local-storage
 }
 
 function deleteItem(i) { // fonction de supression de l'article dans le panier
@@ -36,87 +36,121 @@ function generateLine(p, i) {
         </tr>`
 }
 
-fetch("http://localhost:3000/api/teddies/")
-    .then(response => response.json())
-    .then(teddies => {
-        let prixTotal = [];
-        let products = [];
 
-        for (let i = 0; i < retour.length; i++) { 
-            let p = retour[i];
-            fact.innerHTML += generateLine(p, i);           //  pour chaque teddy present dans le local crée une ligne dans le tableau
-            prixGlobal = (p["price"]) * (p["quantity"]);    // multiplie la quantité par le prix 
-            prixTotal.push(prixGlobal);                     // affiche le prix global des teddies
-            products.push(p["id"]);                         // push l'Id dans products
-        }
+let prixTotal = [];
+let products = [];
 
-        const prixFinal = document.getElementById("prix-final")
-        const reducer = (accumulator, currentValue) => accumulator + currentValue;
+for (let i = 0; i < retour.length; i++) {
+    let p = retour[i];
+    fact.innerHTML += generateLine(p, i); //  pour chaque teddy present dans le local crée une ligne dans le tableau
+    prixGlobal = (p["price"]) * (p["quantity"]); // multiplie la quantité par le prix 
+    prixTotal.push(prixGlobal); // affiche le prix global des teddies
+    products.push(p["id"]); // push l'Id dans products
+}
 
-        let prixFinaladd = prixTotal.reduce(reducer);
+const prixFinal = document.getElementById("prix-final")
+const reducer = (accumulator, currentValue) => accumulator + currentValue;
 
-        prixFinal.innerHTML +=
-            `${(prixFinaladd).toFixed(2)} €`
+let prixFinaladd = prixTotal.reduce(reducer);
 
-        const supArticle = document.getElementById("sup-article");
-        supArticle.addEventListener('click', event => {     // supression total du panier lors du click 
-            localStorage.clear();
-            window.location = `panierVide.html`
-        })
+prixFinal.innerHTML +=
+    `${(prixFinaladd).toFixed(2)} €`
 
-        function addPanier(object) {                        //   stock les information du formulaire dans contact
-            contact.prenom = prenomId.value;
-            contact.nom = nomId.value;
-            contact.adresse = adresseId.value;
-            contact.ville = villeId.value;
-            contact.email = emailId.value;
-            if (contact.prenom != "" && contact.nom != "" && contact.adresse != "" && contact.ville != "" && contact.email != "") {
-                localStorage.setItem('products', JSON.stringify(contact));
-            }
-        }
+const supArticle = document.getElementById("sup-article");
+supArticle.addEventListener('click', event => { // supression total du panier lors du click 
+    localStorage.clear();
+    window.location = `panierVide.html`
+})
 
-        const validForm = document.getElementById("confirmercommande");
-        const forms = document.getElementsByClassName('needs-validation');
-        let validation = Array.prototype.filter.call(forms, function (form) {
-            validForm.addEventListener('click', function (event) {
-                if (form.checkValidity() === false) {
-                    event.preventDefault();
-                    event.stopPropagation();
-                } else {
-                    addPanier();
-                    if (localStorage.getItem("products") != null && localStorage.getItem("ours") != null) {
-                        validForm.innerHTML = `Veuillez patienter ....`
-                        const data = {
-                            contact: {
-                                firstName: contact.prenom,
-                                lastName: contact.nom,
-                                address: contact.adresse,
-                                city: contact.ville,
-                                email: contact.email
-                            },
-                            products
-                        };
-                        (async () => {
-                            const Response = await fetch('http://localhost:3000/api/teddies/order', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json'
-                                },
-                                body: JSON.stringify(data)
-                            });
-                            const content = await Response.json();
-                            console.log(content);
-                            console.log(Response);
-                            window.setTimeout(function () {
-                                window.location = `validation.html?id=${content.orderId}&price=${prixFinaladd}&user=${prenom.value}`, localStorage.removeItem('ours');
-                                localStorage.clear();
-                            }, 2000)
-                        })();
-                    }
-                }
-                form.classList.add('was-validated');
+function addPanier(object) { //   stock les information du formulaire dans contact
+    contact.prenom = prenomId.value;
+    contact.nom = nomId.value;
+    contact.adresse = adresseId.value;
+    contact.ville = villeId.value;
+    contact.email = emailId.value;
+    if (contact.prenom != "" && contact.nom != "" && contact.adresse != "" && contact.ville != "" && contact.email != "") {
+        localStorage.setItem('products', JSON.stringify(contact));
+    }
+}
 
-            }, false);
-        });
-        false
-    })
+
+const form = document.getElementById("formulaire");
+
+//--Ecoute soumission formulaire
+form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    if (validPrenom(form.prenom) && validNom(form.nom) &&
+        validAdresse(form.adresse) && validVille(form.ville) &&
+        validEmail(form.email)) {
+        form.submit();
+    } else {
+        alert("Hop là, coquinou ! Tous les champs sont obligatoire et doivent être valide");
+    }
+
+});
+
+//--Validation prenom
+
+const validPrenom = function(inputPrenom) {
+    let prenomRegExp = new RegExp('^[a-zA-ZÀ-ú\-\s]*', 'g');
+
+    console.log(validPrenom);
+
+    if (inputPrenom.value == "" || inputPrenom.value.length < 2) {
+        return false;
+    } else if (prenomRegExp.test(inputPrenom.value)) {
+        return true;
+    } else {
+        return false;
+    }
+};
+
+//--Validation Nom
+const validNom = function(inputNom) {
+    let nomRegExp = new RegExp('^[a-zA-ZÀ-ú\-\s]*', 'g');
+
+    if (inputNom.value == "" || inputNom.value.length < 3) {
+        return false;
+    } else if (nomRegExp.test(inputNom.value)) {
+        return true;
+    } else {
+        return false;
+    }
+};
+
+//--Validation Adresse
+const validAdresse = function(inputAdresse) {
+    let adresseRegExp = new RegExp('^[a-zA-ZÀ-ú\-\s]*', 'g');
+
+    if (inputAdresse.value == "" || inputAdresse.value.length < 8) {
+        return false;
+    } else if (adresseRegExp.test(inputAdresse.value)) {
+        return true;
+    } else {
+        return false;
+    }
+};
+
+//--Validation Ville
+const validVille = function(inputVille) {
+    let villeRegExp = new RegExp('^[a-zA-ZÀ-ú\-\s]*', 'g');
+
+    if (inputVille.value == "" || inputVille.value.length == 0) {
+        return false;
+    } else if (villeRegExp.test(inputVille.value)) {
+        return true;
+    } else {
+        return false;
+    }
+};
+
+//--Validation Email
+const validEmail = (inputEmail) => {
+    let emailRegExp = new RegExp('^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$', 'g');
+
+    if (emailRegExp.test(inputEmail.value)) {
+        return true;
+    } else {
+        return false;
+    }
+};

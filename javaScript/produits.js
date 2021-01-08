@@ -20,6 +20,22 @@ function generateLine (teddy){                                  // creation des 
     <p class="h6">${teddy.description}</p>`
 }
 
+function changeValeur(oursId) {                      // changement de la valeur de la quantité selectionné
+    select = document.getElementById("quantité");
+    choice = select.selectedIndex                       // Récupération de l'index du <option> choisi
+    valeur_choisie = select.options[choice].value;
+    oursId.quantity = parseInt(valeur_choisie);
+}
+
+function changeCouleur(oursId) {                  // changement de la valeur de la couleur selectionné 
+    select = document.getElementById("couleur-choix");
+    choice = select.selectedIndex // Récupération de l'index du <option> choisi
+    valeur_choisie = select.options[choice].value;
+    oursId.color = valeur_choisie;
+}
+
+
+
 fetch(api)
     .then(response => response.json())
     .then(teddy => {
@@ -44,20 +60,6 @@ fetch(api)
             id: teddy._id,
         };
 
-        function changeValeur(monObjet) {                      // changement de la valeur de la quantité selectionné
-            select = document.getElementById("quantité");
-            choice = select.selectedIndex                       // Récupération de l'index du <option> choisi
-            valeur_choisie = select.options[choice].value;
-            oursId.quantity = parseInt(valeur_choisie);
-        }
-        
-        function changeCouleur(monObjet) {                  // changement de la valeur de la couleur selectionné 
-            select = document.getElementById("couleur-choix");
-            choice = select.selectedIndex // Récupération de l'index du <option> choisi
-            valeur_choisie = select.options[choice].value;
-            oursId.color = valeur_choisie;
-        }
-
         function add() {                                    // ajout au panier 
             newOursId = true;
             if (localStorage.getItem("ours") === null) {            // si panier vide 
@@ -78,17 +80,13 @@ fetch(api)
             }
         }
 
-        window.alert = function (titre) {                                           // fonction alert a l'ajout dans le panier 
-            document.getElementById('alertPanel').style.display = 'block';
-            document.getElementById('overlay').style.display = 'block';
-        }
-
         retourCouleurs.setAttribute("href", "produits.html" + urlRecupId)          
 
         addArticle.addEventListener('click', event => {                             // activation des fonctions au click d'ajout au panier
             changeCouleur(oursId);
             changeValeur(oursId);
             add();
-            alert();
+            document.getElementById('alertPanel').style.display = 'block';
+            document.getElementById('overlay').style.display = 'block';
         })
     })
