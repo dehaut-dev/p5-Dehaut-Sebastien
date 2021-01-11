@@ -86,57 +86,40 @@
         <div class="row ">
             <div class="col-md-12 order-md-1">
                 <h4 class="mb-3 text-center">Adresse de facturation</h4>
-                <form class="needs-validation" id="formulaire" novalidate>
+                <form class="needs-validation" id="formulaire">
                     <div class="row">
-
                         <div class="col-md-6 mb-3">
                             <label for="firstName">Prénom</label>
-                            <input type="text" class="form-control" id="prenom" placeholder="prenom" value="" pattern="^[-a-zA-Zàâäéèêëïîôöùûüç]{1,20}$" required>
-                            <div class="invalid-feedback">
-                                La validation du prénom est requise.
-                            </div>
+                            <input class="form-control" id="prenom" placeholder="prenom">
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="lastName">Nom</label>
-                            <input type="text" class="form-control" id="nom" placeholder="nom" value="" pattern="^[-a-zA-Zàâäéèêëïîôöùûüç]{1,20}$" required>
-                            <div class="invalid-feedback">
-                                La validation du nom est requise.
-                            </div>
+                            <input class="form-control" id="nom" placeholder="nom">
                         </div>
                     </div>
 
                     <div class="mb-3">
                         <label for="adresse">Adresse <span class="text-muted"></span></label>
-                        <input type="text" class="form-control" id="adresse" placeholder="adresse" required>
-                        <div class="invalid-feedback">
-                            Entrez une adresse valide
-                        </div>
+                        <input class="form-control" id="adresse" placeholder="adresse">
                     </div>
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="ville">Ville</label>
-                            <input type="text" class="form-control" id="ville" placeholder="ville" pattern="^[-a-zA-Zàâäéèêëïîôöùûüç]{1,20}$" required>
-                            <div class="invalid-feedback">
-                                Entrez votre ville.
-                            </div>
+                            <input class="form-control" id="ville" placeholder="ville">
                         </div>
 
                         <div class="col-md-6 mb-3">
 
                             <label for="email">Email <span class="text-muted"></span></label>
-                            <input type="email" class="form-control" id="email" placeholder="exemple@exemple.fr" pattern="[a-zA-Z0-9._-]+@[[a-zA-Z.]+.[a-zA-Z.]{2,15}" required>
-                            <div class="invalid-feedback">
-                                Entrez un email valide
-                            </div>
+                            <input class="form-control" id="email" placeholder="exemple@exemple.fr">
                         </div>
                     </div>
                     <hr class="mb-4">
-                    <button class="btn btn-primary btn-lg" type="submit" id="confirmercommande">Confirmer la commande</button>
+                    <div class="container col-md-4 d-flex justify-center">
+                        <button class="btn btn-primary btn-lg" type="submit" id="confirmercommande">Confirmer la commande</button>
+                    </div>
                 </form>
-                <div class="container col-md-4 d-flex justify-center">
-                   
-                </div>
             </div>
         </div>
     </div>
