@@ -35,7 +35,6 @@ function generateLine(p, i) {
         </tr>`
 }
 
-
 let prixTotal = [];
 let products = [];
 
