@@ -42,3 +42,19 @@ let validation = Array.prototype.filter.call(forms, function (form) {
     }, false);
 });
 false
+
+
+
+
+
+function verifPanier (){
+    if (localStorage.getItem("ours") === null) {            
+        document.location.replace = `panierVide.html`                 // redirection sur panier vide en cas de valeur null sur l'item ours du local-storage
+    } else {
+        document.location.replace = `panier.html`                     // sinon envoi du lien panier.html
+    }
+}
+
+panier.addEventListener("click", event => {                 // verification du panier 
+    verifPanier ()
+})

@@ -14,6 +14,5 @@ pseudo.innerText = userRecup;
 prix.innerText = parseInt(priceRecup).toFixed(2);
 
 boutonRetour.addEventListener("click", event => {
-    localStorage.clear();
     window.location = `index.html`
 })

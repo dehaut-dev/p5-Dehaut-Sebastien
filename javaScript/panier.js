@@ -88,20 +88,21 @@ form.addEventListener('submit', function(e) {                   // ecoute soumis
                     },
                     products
                 };
-                (async () => {
-                    const Response = await fetch('http://localhost:3000/api/teddies/order', {
-                        method: 'POST',
+                fetch(`http://localhost:3000/api/teddies/order`, {
+                    method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify(data)
-                    });
-                    const content = await Response.json();
+                }).then(response => response.json())
+                  .then((responseJson) => {
+                    content = responseJson;
+                    console.log(responseJson);
                     window.setTimeout(function () {
                         document.location.replace(`validation.html?id=${content.orderId}&price=${prixFinaladd}&user=${prenom.value}`), localStorage.removeItem('ours');
                         localStorage.clear();
                     }, 2000)
-                })();
+                  })
             }
         
     }
