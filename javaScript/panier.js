@@ -5,6 +5,7 @@ const adresseId = document.getElementById("adresse");
 const villeId = document.getElementById("ville");
 const emailId = document.getElementById("email");
 const fact = document.getElementById("table-p");
+const btnPanier = document.getElementById("confirmercommande");
 const contact = {};
 
 if (localStorage.getItem("ours") === null) {
@@ -26,8 +27,10 @@ function deleteItem(i) { // fonction de supression de l'article dans le panier
 function generateLine(p, i) {
     return `
         <tr>
-            <td class="border" scope="row"><a class="mr-0" href="produits.html?produit=${p["id"]}"><img class="float-left" width="60" height="auto" src="${p["img"]}"> 
-            </a><p>${p["name"]}<a href="#"><i class="far fa-trash-alt float-right pr-4 mt-2" onclick="deleteItem(${i})"></i></a></p></td>
+            <td class="border" scope="row"><a class="mr-0" href="produits.html?produit=${p["id"]}"><img class="float-left" width="60" height="auto" src="${p["img"]}"></a>
+            <p>${p["name"]}
+            <a href="#"><i class="far fa-trash-alt float-right pr-4 mt-2" onclick="deleteItem(${i})"></i></a>
+            </p></td>
             <td class="border" scope="row">${p["color"]}</td>
             <td class="border">${p["price"].toFixed(2)} €</td>
             <td class="border">${p["quantity"]}</td>
@@ -60,117 +63,103 @@ supArticle.addEventListener('click', event => { // supression total du panier lo
     window.location = `panierVide.html`
 })
 
-function addPanier(object) { //   stock les information du formulaire dans contact
-    contact.prenom = prenomId.value;
-    contact.nom = nomId.value;
-    contact.adresse = adresseId.value;
-    contact.ville = villeId.value;
-    contact.email = emailId.value;
-}
-
 const form = document.getElementById("formulaire");
+
+function retourFormulaire(){
+    if (localStorage.getItem("ours") != null) {
+        const data = {
+            contact: {
+                firstName: prenomId.value,
+                lastName: nomId.value,
+                address: adresseId.value,
+                city: villeId.value,
+                email: emailId.value
+            },
+            products
+        };
+        fetch(`http://localhost:3000/api/teddies/order`, {
+            method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+        }).then(response => response.json())
+          .then((responseJson) => {content = responseJson;})
+    }
+}
 
 form.addEventListener('submit', function(e) {                   // ecoute soumission formulaire
     e.preventDefault();
     if (validPrenom(form.prenom) && validNom(form.nom) &&
         validAdresse(form.adresse) && validVille(form.ville) &&
         validEmail(form.email)) {
-            addPanier();
-            if (localStorage.getItem("ours") != null) {
-                const data = {
-                    contact: {
-                        firstName: contact.prenom,
-                        lastName: contact.nom,
-                        address: contact.adresse,
-                        city: contact.ville,
-                        email: contact.email
-                    },
-                    products
-                };
-                fetch(`http://localhost:3000/api/teddies/order`, {
-                    method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(data)
-                }).then(response => response.json())
-                  .then((responseJson) => {
-                    content = responseJson;
-                    console.log(responseJson);
-                    window.setTimeout(function () {
-                        document.location.replace(`validation.html?id=${content.orderId}&price=${prixFinaladd}&user=${prenom.value}`), localStorage.removeItem('ours');
-                        localStorage.clear();
-                    }, 2000)
-                  })
-            }
-        
+            btnPanier.innerHTML = "veuillez patienter ...";
+            retourFormulaire()
+            window.setTimeout(function () {
+                document.location.replace(`validation.html?id=${content.orderId}&price=${prixFinaladd}&user=${prenom.value}`);
+                localStorage.clear();
+            }, 2000)
     }
 });
 
 const nomValidRegExp = /[0-9$£°&+,:;=?@#|'<>.^*()!"{}_]/;
 
 function validPrenom (inputPrenom) {                     // validation prenom
-    
-
     if (inputPrenom.value == "" || inputPrenom.value.length < 2) {
         alert("les champs prenon est vide!!!!")
         return false;
     } else if (!RegExp(nomValidRegExp).test(inputPrenom.value)) {
         return true;
     } else {
-        alert("les champs prenon comporte une erreur 2!!!!")
+        alert("les champs prenon comporte une erreur !!!!")
         return false;
     }
 };
 
 function validNom(inputNom) {                           //   validation Nom
-
     if (inputNom.value == "" || inputNom.value.length < 3) {
-        alert("les champs nom comportte une erreur 1!!!!")
+        alert("les champs nom est vide!!!!")
         return false;
     } else if (!RegExp(nomValidRegExp).test(inputNom.value)) {
         return true;
     } else {
-        alert("les champs nom comportte une erreur 2!!!!")
+        alert("les champs nom comporte une erreur !!!!")
         return false;
     }
 };
 
-function validAdresse (inputAdresse) {                   // validation Adresse
-    let adresseRegExp = new RegExp('^[a-zA-ZÀ-ú\-\s]*');
+const adresseValidRegExp = /[$£°&+,:;=?@#|'<>.^*()!"{}_]/;
 
+function validAdresse (inputAdresse) {                   // validation Adresse
     if (inputAdresse.value == "" || inputAdresse.value.length < 8) {
-        alert("les champs adresse comportte une erreur 1!!!!")
+        alert("les champs adresse est vide!!!!")
         return false;
-    } else if (adresseRegExp.test(inputAdresse.value)) {
+    } else if (!RegExp(adresseValidRegExp).test(inputAdresse.value)) {
         return true;
     } else {
-        alert("les champs adresse comportte une erreur 2!!!!")
+        alert("les champs adresse comporte une erreur !!!!")
         return false;
     }
 };
 
 function validVille (inputVille) {                       // validation Ville
-    let villeRegExp = new RegExp('^[a-zA-ZÀ-ú\-\s]*');
-
     if (inputVille.value == "" || inputVille.value.length == 0) {
-        alert("les champs ville comportte une erreur 1!!!!")
+        alert("les champs ville est vide!!!!")
         return false;
-    } else if (villeRegExp.test(inputVille.value)) {
+    } else if (!RegExp(nomValidRegExp).test(inputVille.value)) {
         return true;
     } else {
-        alert("les champs ville comportte une erreur 2!!!!")
+        alert("les champs ville comporte une erreur !!!!")
         return false;
     }
 };
 
 function validEmail (inputEmail) {                            // validation Email
-    let emailRegExp = new RegExp('^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$');
-
-    if (emailRegExp.test(inputEmail.value)) {
+    const emailRegExp = /^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$/;
+    if (RegExp(emailRegExp).test(inputEmail.value)) {
         return true;
     } else {
-        alert("les champs mail comportte une erreur 1!!!!")
+        alert("les champs mail comportte une erreur !!!!")
         return false;
     }
 };

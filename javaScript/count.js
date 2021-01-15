@@ -1,4 +1,4 @@
-let retour = JSON.parse(localStorage.getItem('ours'));
+const retour = JSON.parse(localStorage.getItem('ours'));
 const fact = document.getElementById("table-p");
 const droop = document.getElementById("dropdown");
 const prixFinal = document.getElementById("prix-final");
