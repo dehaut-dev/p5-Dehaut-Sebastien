@@ -6,9 +6,12 @@ const addArticle = document.getElementById("add-article");
 const retourCouleurs = document.getElementById("retouCouleurs");
 retourCouleurs.setAttribute("href", "produits.html" + urlRecupId)
 
-let searchParams = new URLSearchParams(urlRecupId);
-const urlRecup = searchParams.getAll("produit");
-api = "http://localhost:3000/api/teddies/" + urlRecup;
+function recupUrl () {
+    let searchParams = new URLSearchParams(urlRecupId);
+    const urlRecup = searchParams.getAll("produit");
+    api = "http://localhost:3000/api/teddies/" + urlRecup;
+}
+recupUrl();
 
 function stockOurs(){
     localStorage.setItem("ours", JSON.stringify(oursTab));
