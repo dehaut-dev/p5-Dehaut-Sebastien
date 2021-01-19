@@ -17,12 +17,37 @@ function stockOurs(){
     localStorage.setItem("ours", JSON.stringify(oursTab));
 }
 
-function generateLine(teddy) { // creation des div pour le teddy selectionné
-    return `
-    <h1 class="text-center">${teddy.name}</h1>
-    <img class="col-md-8 img-fluid" width="auto" height="300" src="${teddy.imageUrl}">
-    <p class="font-weight-bold h3">${(teddy.price/100).toFixed(2)} €</p>
-    <p class="h6">${teddy.description}</p>`
+// function generateLine(teddy) { // creation des div pour le teddy selectionné
+//     return `
+//     <h1 class="text-center">${teddy.name}</h1>
+//     <img class="col-md-8 img-fluid" width="auto" height="300" src="${teddy.imageUrl}">
+//     <p class="font-weight-bold h3">${(teddy.price/100).toFixed(2)} €</p>
+//     <p class="h6">${teddy.description}</p>`
+// }
+
+function generateLine(teddy) {                          // creation des div pour le teddy selectionné
+    let titreGener = document.createElement("h1");      // création des elements 
+    let imgGener = document.createElement("img");
+    let priceGener = document.createElement("p");
+    let descriptionGener = document.createElement("p");
+
+    titreGener.textContent = teddy.name;                // ajout du texte 
+    priceGener.textContent = (teddy.price/100).toFixed(2) + ' €';
+    descriptionGener.textContent = teddy.description;
+
+    titreGener.setAttribute("class", "text-center");        // ajout des classes 
+    imgGener.setAttribute("class", "col-md-8 img-fluid");
+    imgGener.setAttribute("height", "300");
+    imgGener.setAttribute("src", teddy.imageUrl);
+    priceGener.setAttribute("class", "font-weight-bold h3");
+    descriptionGener.setAttribute("class", "h6")
+
+    container.appendChild(titreGener);                // hierarchisation des elements
+    container.appendChild(imgGener);
+    container.appendChild(priceGener);
+    container.appendChild(descriptionGener);
+
+
 }
 
 function changeValeur(oursId) { // changement de la valeur de la quantité selectionné
@@ -65,9 +90,9 @@ fetch(api)
     .then(response => response.json())
     .then(teddy => {
 
-        container.innerHTML += generateLine(teddy); // mise en place de la partie HTML dynamique
+        generateLine(teddy); // mise en place de la partie HTML dynamique
 
-        titleSecondary.innerHTML += `${teddy.name}` // fin de la mise en page HTML dynamique
+        titleSecondary.textContent = `${teddy.name}` // fin de la mise en page HTML dynamique
 
         const listOurs = teddy.colors;
 

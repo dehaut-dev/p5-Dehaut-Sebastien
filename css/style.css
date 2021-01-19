@@ -50,3 +50,7 @@
   .img-accueil{
     height: 250px;
   }
+  .far:hover{
+    cursor: pointer;
+    color: dodgerblue;
+}

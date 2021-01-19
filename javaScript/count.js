@@ -27,7 +27,7 @@ function notGenerate (){
     </div>`
 }
 
-if (localStorage.getItem("ours") != null) {
+if (localStorage.getItem("ours") != null) {                     // genère une ligne si le panier contient des articles 
     for (let i = 0; i < retour.length; i++) {
         let p = retour[i];
         fact.innerHTML += generateLineUp (p);
@@ -40,7 +40,7 @@ if (localStorage.getItem("ours") != null) {
     prixFinal.innerHTML +=
         `${(prixFinaladd).toFixed(2)}€`
 
-} else {
+} else {                                                           // genère une ligne panier vide si le panier ne contient pas d'article  
     droop.innerHTML = notGenerate ();
 }
 

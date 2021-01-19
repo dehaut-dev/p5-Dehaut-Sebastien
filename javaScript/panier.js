@@ -24,8 +24,8 @@ function deleteItem(i) { // fonction de supression de l'article dans le panier
     }
 }
 
-function generateTrash (i, p){
-        let trGener = document.createElement("tr");
+function generateTeddy (i, p){
+        let trGener = document.createElement("tr");     // création des elements 
         let tdGener = document.createElement("td");
         let tdGener1 = document.createElement("td");
         let tdGener2 = document.createElement("td");
@@ -33,19 +33,22 @@ function generateTrash (i, p){
         let tdGener4 = document.createElement("td");
         let pGener = document.createElement("p");
         let imgGener = document.createElement("img");
+        let lienImg = document.createElement("a");
         let priceGener = document.createElement("p");
         let qteGener = document.createElement("p");
         let colorGener = document.createElement("p");
         let trash = document.createElement("i");
         let prixGerner = document.createElement("p")
 
-        prixGerner.textContent = ((p["price"])*(p["quantity"])).toFixed(2)
+        prixGerner.textContent = ((p["price"])*(p["quantity"])).toFixed(2)          // ajout du texte 
         pGener.textContent = p["name"];
         priceGener.textContent = (p["price"]).toFixed(2) + " €";
         qteGener.textContent = p["quantity"];
         colorGener.textContent = p["color"];
-        imgGener.setAttribute("class", "float-left");
+
+        imgGener.setAttribute("class", "float-left");                       // ajout des classes 
         imgGener.setAttribute("src", p["img"]);
+        lienImg.setAttribute("href", "produits.html?produit=" + p["id"]);
         imgGener.setAttribute("width", '60');
         tdGener.setAttribute("class", "border");
         tdGener1.setAttribute("class", "border");
@@ -53,16 +56,17 @@ function generateTrash (i, p){
         tdGener3.setAttribute("class", "border");
         tdGener4.setAttribute("class", "border");
         trash.setAttribute("class", "far fa-trash-alt float-right pr-4 mt-2");
-        trash.setAttribute("id", i)
+        trash.setAttribute("id", i)                                     
 
-        fact.appendChild(trGener);  
+        fact.appendChild(trGener);                                         // hierarchisation des elements
         trGener.appendChild(tdGener);
         trGener.appendChild(tdGener1);
         trGener.appendChild(tdGener2);
         trGener.appendChild(tdGener3);
         trGener.appendChild(tdGener4);
         
-        tdGener.appendChild(imgGener);
+        tdGener.appendChild(lienImg);
+        lienImg.appendChild(imgGener);
         tdGener.appendChild(pGener);
         pGener.appendChild(trash);
         tdGener1.appendChild(colorGener);
@@ -70,7 +74,7 @@ function generateTrash (i, p){
         tdGener3.appendChild(qteGener)
         tdGener4.appendChild(prixGerner)
 
-        trash.addEventListener("click", event =>{
+        trash.addEventListener("click", event =>{                       // ecoute du click sur les corbeilles 
             deleteItem(trash.id)
         })
 }
@@ -83,7 +87,7 @@ retour.forEach((p, i) => {
     prixGlobal = (p["price"]) * (p["quantity"]); // multiplie la quantité par le prix 
     prixTotal.push(prixGlobal); // affiche le prix global des teddies
     products.push(p["id"]); // push l'Id dans products
-    generateTrash (i, p);   //  pour chaque teddy present dans le local crée une ligne dans le tableau
+    generateTeddy (i, p);   //  pour chaque teddy present dans le local crée une ligne dans le tableau
 })
 
 const prixFinal = document.getElementById("prix-final")
@@ -130,7 +134,7 @@ form.addEventListener('submit', function(e) {                   // ecoute soumis
     if (validPrenom(form.prenom) && validNom(form.nom) &&
         validAdresse(form.adresse) && validVille(form.ville) &&
         validEmail(form.email)) {
-            btnPanier.innerHTML = "veuillez patienter ...";
+            btnPanier.textContent = "Veuillez patienter ...";
             retourFormulaire()
             window.setTimeout(function () {
                 document.location.replace(`validation.html?id=${content.orderId}&price=${prixFinaladd}&user=${prenom.value}`);
