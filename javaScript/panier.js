@@ -6,33 +6,85 @@ const villeId = document.getElementById("ville");
 const emailId = document.getElementById("email");
 const fact = document.getElementById("table-p");
 const btnPanier = document.getElementById("confirmercommande");
+const selecTeddy = document.getElementById("select-teddy");
 const contact = {};
 
 if (localStorage.getItem("ours") === null) {
     window.location = `index.html` // redirection sur panier vide en cas de valeur null sur l'item ours du local-storage
 }
 
-function generateLine(p, i) {
-    return `
-        <tr>
-            <td class="border" scope="row"><a class="mr-0" href="produits.html?produit=${p["id"]}"><img class="float-left" width="60" height="auto" src="${p["img"]}"></a><p>${p["name"]}</p></td>
-            <td class="border" scope="row">${p["color"]}</td>
-            <td class="border">${p["price"].toFixed(2)} €</td>
-            <td class="border">${p["quantity"]}</td>
-            <td class""prix>${((p["price"])*(p["quantity"])).toFixed(2)} €</td>
-        </tr>`
+function deleteItem(i) { // fonction de supression de l'article dans le panier
+    retour.splice(i, 1);
+    localStorage.setItem('ours', JSON.stringify(retour));
+    if (retour.length > 0) {
+        window.location.reload();
+    } else {
+        window.location = "index.html"; // si le panier est vide redirige vers la page index.html
+        localStorage.clear()
+    }
+}
+
+function generateTrash (i, p){
+        let trGener = document.createElement("tr");
+        let tdGener = document.createElement("td");
+        let tdGener1 = document.createElement("td");
+        let tdGener2 = document.createElement("td");
+        let tdGener3 = document.createElement("td");
+        let tdGener4 = document.createElement("td");
+        let pGener = document.createElement("p");
+        let imgGener = document.createElement("img");
+        let priceGener = document.createElement("p");
+        let qteGener = document.createElement("p");
+        let colorGener = document.createElement("p");
+        let trash = document.createElement("i");
+        let prixGerner = document.createElement("p")
+
+        prixGerner.textContent = ((p["price"])*(p["quantity"])).toFixed(2)
+        pGener.textContent = p["name"];
+        priceGener.textContent = (p["price"]).toFixed(2) + " €";
+        qteGener.textContent = p["quantity"];
+        colorGener.textContent = p["color"];
+        imgGener.setAttribute("class", "float-left");
+        imgGener.setAttribute("src", p["img"]);
+        imgGener.setAttribute("width", '60');
+        tdGener.setAttribute("class", "border");
+        tdGener1.setAttribute("class", "border");
+        tdGener2.setAttribute("class", "border");
+        tdGener3.setAttribute("class", "border");
+        tdGener4.setAttribute("class", "border");
+        trash.setAttribute("class", "far fa-trash-alt float-right pr-4 mt-2");
+        trash.setAttribute("id", i)
+
+        fact.appendChild(trGener);  
+        trGener.appendChild(tdGener);
+        trGener.appendChild(tdGener1);
+        trGener.appendChild(tdGener2);
+        trGener.appendChild(tdGener3);
+        trGener.appendChild(tdGener4);
+        
+        tdGener.appendChild(imgGener);
+        tdGener.appendChild(pGener);
+        pGener.appendChild(trash);
+        tdGener1.appendChild(colorGener);
+        tdGener2.appendChild(priceGener);
+        tdGener3.appendChild(qteGener)
+        tdGener4.appendChild(prixGerner)
+
+        trash.addEventListener("click", event =>{
+            deleteItem(trash.id)
+        })
 }
 
 let prixTotal = [];
 let products = [];
 
-for (let i = 0; i < retour.length; i++) {
-    let p = retour[i];
-    fact.innerHTML += generateLine(p, i); //  pour chaque teddy present dans le local crée une ligne dans le tableau
+retour.forEach((p, i) => {
+    p = retour[i];
     prixGlobal = (p["price"]) * (p["quantity"]); // multiplie la quantité par le prix 
     prixTotal.push(prixGlobal); // affiche le prix global des teddies
     products.push(p["id"]); // push l'Id dans products
-}
+    generateTrash (i, p);   //  pour chaque teddy present dans le local crée une ligne dans le tableau
+})
 
 const prixFinal = document.getElementById("prix-final")
 const reducer = (accumulator, currentValue) => accumulator + currentValue;
