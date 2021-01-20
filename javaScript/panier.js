@@ -120,10 +120,8 @@ function retourFormulaire(){
         };
         fetch(`http://localhost:3000/api/teddies/order`, {
             method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(data)
         }).then(response => response.json())
           .then((responseJson) => {content = responseJson;})
     }
@@ -147,7 +145,7 @@ const nomValidRegExp = /[0-9$£°&+,:;=?@#|'<>.^*()!"{}_]/;
 
 function validPrenom (inputPrenom) {                     // validation prenom
     if (inputPrenom.value == "" || inputPrenom.value.length < 2) {
-        alert("les champs prenon est vide!!!!")
+        alert("les champs prenon est vide ou comporte une erreur!!!!")
         return false;
     } else if (!RegExp(nomValidRegExp).test(inputPrenom.value)) {
         return true;
@@ -159,7 +157,7 @@ function validPrenom (inputPrenom) {                     // validation prenom
 
 function validNom(inputNom) {                           //   validation Nom
     if (inputNom.value == "" || inputNom.value.length < 3) {
-        alert("les champs nom est vide!!!!")
+        alert("les champs nom est vide ou comporte une erreur!!!!")
         return false;
     } else if (!RegExp(nomValidRegExp).test(inputNom.value)) {
         return true;
@@ -173,7 +171,7 @@ const adresseValidRegExp = /[$£°&+,:;=?@#|'<>.^*()!"{}_]/;
 
 function validAdresse (inputAdresse) {                   // validation Adresse
     if (inputAdresse.value == "" || inputAdresse.value.length < 8) {
-        alert("les champs adresse est vide!!!!")
+        alert("les champs adresse est vide ou comporte une erreur!!!!")
         return false;
     } else if (!RegExp(adresseValidRegExp).test(inputAdresse.value)) {
         return true;
@@ -185,7 +183,7 @@ function validAdresse (inputAdresse) {                   // validation Adresse
 
 function validVille (inputVille) {                       // validation Ville
     if (inputVille.value == "" || inputVille.value.length == 0) {
-        alert("les champs ville est vide!!!!")
+        alert("les champs ville est vide ou comporte une erreur!!!!")
         return false;
     } else if (!RegExp(nomValidRegExp).test(inputVille.value)) {
         return true;

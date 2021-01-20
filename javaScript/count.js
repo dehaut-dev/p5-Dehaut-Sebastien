@@ -37,8 +37,7 @@ if (localStorage.getItem("ours") != null) {                     // genère une l
     }
     let prixFinaladd = prixTotal.reduce(reducer);
 
-    prixFinal.innerHTML +=
-        `${(prixFinaladd).toFixed(2)}€`
+    prixFinal.innerHTML += `${(prixFinaladd).toFixed(2)}€`
 
 } else {                                                           // genère une ligne panier vide si le panier ne contient pas d'article  
     droop.innerHTML = notGenerate ();
