@@ -9,10 +9,6 @@ const btnPanier = document.getElementById("confirmercommande");
 const selecTeddy = document.getElementById("select-teddy");
 const contact = {};
 
-if (localStorage.getItem("ours") === null) {
-    window.location = `index.html` // redirection sur panier vide en cas de valeur null sur l'item ours du local-storage
-}
-
 function deleteItem(i) { // fonction de supression de l'article dans le panier
     retour.splice(i, 1);
     localStorage.setItem('ours', JSON.stringify(retour));

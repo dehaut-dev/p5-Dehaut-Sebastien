@@ -17,14 +17,6 @@ function stockOurs(){
     localStorage.setItem("ours", JSON.stringify(oursTab));
 }
 
-// function generateLine(teddy) { // creation des div pour le teddy selectionné
-//     return `
-//     <h1 class="text-center">${teddy.name}</h1>
-//     <img class="col-md-8 img-fluid" width="auto" height="300" src="${teddy.imageUrl}">
-//     <p class="font-weight-bold h3">${(teddy.price/100).toFixed(2)} €</p>
-//     <p class="h6">${teddy.description}</p>`
-// }
-
 function generateLine(teddy) {                          // creation des div pour le teddy selectionné
     let titreGener = document.createElement("h1");      // création des elements 
     let imgGener = document.createElement("img");
@@ -114,5 +106,6 @@ fetch(api)
             add(teddy, oursId);
             document.getElementById('alertPanel').style.display = 'block';
             document.getElementById('overlay').style.display = 'block';
+            console.log("Produit ajouté au panier");
         })
     })
