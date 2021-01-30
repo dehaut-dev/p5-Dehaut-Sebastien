@@ -104,7 +104,7 @@ const form = document.getElementById("formulaire");
 
 function retourFormulaire(){
     if (localStorage.getItem("ours") != null) {
-        const data = {
+        const data = {                              
             contact: {
                 firstName: prenomId.value,
                 lastName: nomId.value,
@@ -131,9 +131,9 @@ form.addEventListener('submit', function(e) {                   // ecoute soumis
             btnPanier.textContent = "Veuillez patienter ...";
             retourFormulaire()
             window.setTimeout(function () {
-                document.location.replace(`validation.html?id=${content.orderId}&price=${prixFinaladd}&user=${prenom.value}`);
+                document.location.replace(`validation.html?id=${content.orderId}&price=${prixFinaladd}&user=${prenom.value}`);          // envoi sur la page de confirmation
                 localStorage.clear();
-            }, 2000)
+            }, 1500)
     }
 });
 
